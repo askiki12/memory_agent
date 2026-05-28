@@ -7,7 +7,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 1.369
+    "latency_sec": 1.392
   },
   {
     "qa_id": "conv-26_q15",
@@ -17,7 +17,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.057
+    "latency_sec": 0.065
   },
   {
     "qa_id": "conv-26_q25",
@@ -27,7 +27,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.057
+    "latency_sec": 0.053
   },
   {
     "qa_id": "conv-26_q26",
@@ -37,7 +37,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.059
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-26_q29",
@@ -47,7 +47,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.057
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-26_q31",
@@ -57,7 +57,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.054
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-26_q42",
@@ -67,7 +67,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.049
   },
   {
     "qa_id": "conv-26_q43",
@@ -97,7 +97,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.043
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-26_q61",
@@ -107,7 +107,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-26_q64",
@@ -117,7 +117,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-26_q69",
@@ -127,7 +127,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-26_q71",
@@ -137,7 +137,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-26_q81",
@@ -147,7 +147,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-26_q82",
@@ -157,7 +157,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-26_q85",
@@ -167,7 +167,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.055
   },
   {
     "qa_id": "conv-26_q101",
@@ -177,7 +177,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-26_q141",
@@ -187,7 +187,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-30_q3",
@@ -197,7 +197,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.057
   },
   {
     "qa_id": "conv-30_q5",
@@ -207,7 +207,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-30_q12",
@@ -217,7 +217,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-30_q15",
@@ -227,7 +227,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.054
   },
   {
     "qa_id": "conv-30_q19",
@@ -237,7 +237,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.049
   },
   {
     "qa_id": "conv-30_q22",
@@ -247,7 +247,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-30_q33",
@@ -257,7 +257,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-30_q75",
@@ -267,7 +267,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.053
   },
   {
     "qa_id": "conv-41_q7",
@@ -297,7 +297,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-41_q22",
@@ -327,7 +327,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-41_q41",
@@ -347,7 +347,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-41_q52",
@@ -357,7 +357,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-41_q53",
@@ -367,7 +367,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.049
   },
   {
     "qa_id": "conv-41_q57",
@@ -377,7 +377,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-41_q62",
@@ -387,7 +387,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-41_q64",
@@ -397,7 +397,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-41_q65",
@@ -407,7 +407,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.058
   },
   {
     "qa_id": "conv-41_q108",
@@ -417,7 +417,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.039
   },
   {
     "qa_id": "conv-41_q113",
@@ -427,7 +427,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-41_q117",
@@ -437,7 +437,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-41_q134",
@@ -447,7 +447,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-42_q0",
@@ -457,7 +457,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-42_q14",
@@ -477,7 +477,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.049
   },
   {
     "qa_id": "conv-42_q20",
@@ -497,7 +497,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q32",
@@ -507,7 +507,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-42_q33",
@@ -517,7 +517,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-42_q35",
@@ -527,7 +527,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q37",
@@ -537,7 +537,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.051
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q43",
@@ -547,7 +547,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.052
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-42_q64",
@@ -557,7 +557,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-42_q66",
@@ -567,7 +567,7 @@
     "category_name": "multi_hop",
     "prediction": "Nate might consider becoming a game developer or esports commentator.",
     "error": null,
-    "latency_sec": 0.159
+    "latency_sec": 0.16
   },
   {
     "qa_id": "conv-42_q81",
@@ -577,7 +577,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q84",
@@ -587,7 +587,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-42_q87",
@@ -597,7 +597,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q91",
@@ -607,7 +607,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q133",
@@ -617,7 +617,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-42_q157",
@@ -627,7 +627,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.051
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-42_q161",
@@ -637,7 +637,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-42_q188",
@@ -647,7 +647,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-42_q193",
@@ -657,7 +657,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-43_q1",
@@ -667,7 +667,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-43_q8",
@@ -677,7 +677,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-43_q11",
@@ -687,7 +687,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.051
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q15",
@@ -697,7 +697,7 @@
     "category_name": "multi_hop",
     "prediction": "Anthony is a common name.",
     "error": null,
-    "latency_sec": 0.102
+    "latency_sec": 0.096
   },
   {
     "qa_id": "conv-43_q22",
@@ -707,7 +707,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.052
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-43_q27",
@@ -717,7 +717,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.051
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q30",
@@ -727,7 +727,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-43_q34",
@@ -737,7 +737,7 @@
     "category_name": "multi_hop",
     "prediction": "John could pursue various careers or hobbies after his basketball career.",
     "error": null,
-    "latency_sec": 0.164
+    "latency_sec": 0.159
   },
   {
     "qa_id": "conv-43_q36",
@@ -747,7 +747,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q37",
@@ -757,7 +757,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-43_q40",
@@ -767,7 +767,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.049
   },
   {
     "qa_id": "conv-43_q49",
@@ -777,7 +777,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.052
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q50",
@@ -787,7 +787,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-43_q57",
@@ -797,7 +797,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q66",
@@ -807,7 +807,7 @@
     "category_name": "multi_hop",
     "prediction": "\"A New Hope\" by Timothy Zahn.",
     "error": null,
-    "latency_sec": 0.129
+    "latency_sec": 0.128
   },
   {
     "qa_id": "conv-43_q67",
@@ -817,7 +817,7 @@
     "category_name": "multi_hop",
     "prediction": "Photography.",
     "error": null,
-    "latency_sec": 0.068
+    "latency_sec": 0.067
   },
   {
     "qa_id": "conv-43_q70",
@@ -827,7 +827,7 @@
     "category_name": "multi_hop",
     "prediction": "Cradle of Foretime (Drogheda) and Knock Shrine (County Wicklow).",
     "error": null,
-    "latency_sec": 0.247
+    "latency_sec": 0.24
   },
   {
     "qa_id": "conv-43_q74",
@@ -837,7 +837,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-43_q91",
@@ -847,7 +847,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-43_q108",
@@ -857,7 +857,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-43_q131",
@@ -867,7 +867,7 @@
     "category_name": "open_domain",
     "prediction": "Tim's prized possession is his collection of awards and certificates.",
     "error": null,
-    "latency_sec": 0.17
+    "latency_sec": 0.16
   },
   {
     "qa_id": "conv-43_q142",
@@ -877,7 +877,7 @@
     "category_name": "open_domain",
     "prediction": "\"The Alchemist\" inspired John to pursue his dreams with determination.",
     "error": null,
-    "latency_sec": 0.173
+    "latency_sec": 0.168
   },
   {
     "qa_id": "conv-44_q19",
@@ -887,7 +887,7 @@
     "category_name": "multi_hop",
     "prediction": "Playing fetch indoors.",
     "error": null,
-    "latency_sec": 0.081
+    "latency_sec": 0.077
   },
   {
     "qa_id": "conv-44_q20",
@@ -897,7 +897,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-44_q33",
@@ -907,7 +907,7 @@
     "category_name": "multi_hop",
     "prediction": "Andrew could consider hiring a dog walker or using a doggy daycare service.",
     "error": null,
-    "latency_sec": 0.197
+    "latency_sec": 0.203
   },
   {
     "qa_id": "conv-44_q38",
@@ -937,7 +937,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-44_q49",
@@ -947,7 +947,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-44_q55",
@@ -957,7 +957,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-44_q88",
@@ -977,7 +977,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-47_q11",
@@ -1017,7 +1017,7 @@
     "category_name": "multi_hop",
     "prediction": "Jill is a common female given name.",
     "error": null,
-    "latency_sec": 0.131
+    "latency_sec": 0.13
   },
   {
     "qa_id": "conv-47_q39",
@@ -1027,7 +1027,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.041
   },
   {
     "qa_id": "conv-47_q40",
@@ -1037,7 +1037,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-47_q87",
@@ -1047,7 +1047,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.067
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-47_q99",
@@ -1057,7 +1057,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-47_q106",
@@ -1067,7 +1067,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-47_q130",
@@ -1077,7 +1077,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-47_q139",
@@ -1087,7 +1087,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-48_q0",
@@ -1097,7 +1097,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-48_q3",
@@ -1107,7 +1107,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.043
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-48_q13",
@@ -1117,7 +1117,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-48_q18",
@@ -1127,7 +1127,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q19",
@@ -1137,7 +1137,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q28",
@@ -1147,7 +1147,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q31",
@@ -1167,7 +1167,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q48",
@@ -1177,7 +1177,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q73",
@@ -1187,7 +1187,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-48_q79",
@@ -1197,7 +1197,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q80",
@@ -1207,7 +1207,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q123",
@@ -1217,7 +1217,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-48_q133",
@@ -1227,7 +1227,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.05
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-48_q150",
@@ -1237,7 +1237,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-48_q164",
@@ -1247,7 +1247,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-48_q166",
@@ -1257,7 +1257,7 @@
     "category_name": "open_domain",
     "prediction": "A meditation center.",
     "error": null,
-    "latency_sec": 0.081
+    "latency_sec": 0.074
   },
   {
     "qa_id": "conv-49_q3",
@@ -1267,7 +1267,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-49_q5",
@@ -1277,7 +1277,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.052
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-49_q8",
@@ -1287,7 +1287,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.045
   },
   {
     "qa_id": "conv-49_q10",
@@ -1307,7 +1307,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.049
+    "latency_sec": 0.048
   },
   {
     "qa_id": "conv-49_q20",
@@ -1317,7 +1317,7 @@
     "category_name": "multi_hop",
     "prediction": "A personalized fitness tracker or a subscription to a healthy meal delivery service.",
     "error": null,
-    "latency_sec": 0.183
+    "latency_sec": 0.182
   },
   {
     "qa_id": "conv-49_q27",
@@ -1367,7 +1367,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-49_q65",
@@ -1387,7 +1387,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-49_q79",
@@ -1427,7 +1427,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.042
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-50_q7",
@@ -1447,7 +1447,7 @@
     "category_name": "single_hop",
     "prediction": "Dave likely enjoys the outdoors and physical activity.",
     "error": null,
-    "latency_sec": 0.128
+    "latency_sec": 0.131
   },
   {
     "qa_id": "conv-50_q21",
@@ -1457,7 +1457,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-50_q23",
@@ -1477,7 +1477,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.047
+    "latency_sec": 0.05
   },
   {
     "qa_id": "conv-50_q34",
@@ -1487,7 +1487,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-50_q37",
@@ -1497,7 +1497,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.051
   },
   {
     "qa_id": "conv-50_q46",
@@ -1507,7 +1507,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.043
   },
   {
     "qa_id": "conv-50_q48",
@@ -1517,7 +1517,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.047
   },
   {
     "qa_id": "conv-50_q50",
@@ -1527,7 +1527,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.046
+    "latency_sec": 0.053
   },
   {
     "qa_id": "conv-50_q54",
@@ -1537,7 +1537,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-50_q56",
@@ -1547,7 +1547,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.046
   },
   {
     "qa_id": "conv-50_q85",
@@ -1557,7 +1557,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.045
+    "latency_sec": 0.044
   },
   {
     "qa_id": "conv-50_q97",
@@ -1567,7 +1567,7 @@
     "category_name": "open_domain",
     "prediction": "Dave emphasizes the importance of customization and individuality.",
     "error": null,
-    "latency_sec": 0.139
+    "latency_sec": 0.157
   },
   {
     "qa_id": "conv-50_q104",
@@ -1577,7 +1577,7 @@
     "category_name": "open_domain",
     "prediction": "Calvin customized his guitar with a shiny finish for aesthetic appeal.",
     "error": null,
-    "latency_sec": 0.169
+    "latency_sec": 0.182
   },
   {
     "qa_id": "conv-50_q114",
@@ -1587,7 +1587,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.048
+    "latency_sec": 0.052
   },
   {
     "qa_id": "conv-50_q143",
@@ -1597,6 +1597,6 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.044
+    "latency_sec": 0.05
   }
 ]

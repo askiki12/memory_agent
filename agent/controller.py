@@ -7,11 +7,11 @@ from pathlib import Path
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from ..llm_client import LLMClient
-from ..memory.store import MemoryStore
-from ..memory.writer import MemoryWriter
-from ..memory.updater import MemoryUpdater
-from ..memory.retriever import MemoryRetriever
+from eval_kit.llm_client import LLMClient
+from memory.store import MemoryStore
+from memory.writer import MemoryWriter
+from memory.updater import MemoryUpdater
+from memory.retriever import MemoryRetriever
 
 ANSWER_SYSTEM = (
     "You are answering questions about a past conversation between two people. "

@@ -38,7 +38,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from llm_client import LLMClient
 from metrics import f1_score, exact_match
+from dotenv import load_dotenv
 
+# 加载环境变量
+load_dotenv()
 
 # 说明：Judge 的 prompt 保持英文，与 LoCoMo 题目语言一致，避免引入额外偏置。
 JUDGE_SYSTEM = (
@@ -146,15 +149,19 @@ def main():
     args = parser.parse_args()
 
     if args.judge_base_url:
-        os.environ["LLM_BASE_URL"] = args.judge_base_url
+        os.environ["JUDGE_LLM_BASE_URL"] = args.judge_base_url
     if args.judge_model:
-        os.environ["LLM_MODEL"] = args.judge_model
+        os.environ["JUDGE_LLM_MODEL"] = args.judge_model
 
     with open(args.predictions) as f:
         preds = json.load(f)
     if args.limit:
         preds = preds[:args.limit]
-    client = LLMClient(base_url="https://api.deepseek.com/v1", api_key="sk-712e53c2c06843cb9db65f5a3f26348a", model="deepseek-v4-flash", temperature=0.0)
+    client = LLMClient(
+        base_url=os.getenv("JUDGE_LLM_BASE_URL"), 
+        api_key=os.getenv("JUDGE_LLM_API_KEY"),
+        model=os.getenv("JUDGE_LLM_MODEL"), 
+        temperature=0.0)
     print(f"[Judge] 模型={client.model}  接口={client.base_url}  "
           f"并发={args.num_workers}  总数={len(preds)}")
 
