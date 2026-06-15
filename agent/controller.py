@@ -1,22 +1,21 @@
-"""Hybrid Memory Agent — raw dialogue chunks + session summaries.
+"""Hybrid Memory Agent v3 — two-stage retrieval with session routing.
 
-Architecture (post-evaluation redesign):
-  Layer 0 — Raw dialogue turns (zero information loss, like Vanilla RAG)
-  Layer 1 — Session summaries (natural-language, 3-5 sentences per session)
+Architecture (v3):
+  SummaryStore (plain list) — summaries as "router" to find sessions
+  TurnStore (FAISS) — raw dialogue turns as "evidence" for generation
 
-Why this design:
-  Our evaluation showed the 3B model cannot reliably produce structured JSON
-  facts. When JSON extraction fails, facts are silently lost and the system
-  becomes worse than Vanilla RAG (which keeps everything).
+  ingest:  generate session summaries → store in SummaryStore
+           store raw turns in TurnStore
+  answer:  Stage 1: query summaries → find relevant sessions
+           Stage 2: retrieve raw turns with session-aware boosting
+           Generate answer from raw turns only (no lossy summaries in context)
 
-  Instead, we:
-    1. Store every dialogue turn as a raw chunk (RAG's strength: no loss)
-    2. Generate simple NL summaries per session (easy for 3B model)
-    3. Retrieve from both sources with pure semantic search
-    4. Use a simple answer prompt (no CoT — confuses small models)
-
-  The summaries act as "dense retrieval targets" that help surface relevant
-  sessions. The raw turns provide the exact wording for answering.
+Key insight:
+  Summaries have clean, query-like prose → excellent for semantic routing.
+  Raw turns have exact facts and wording → essential for precise answers.
+  Mixing them in one FAISS index (v2) caused summaries to crowd out raw
+  turns, giving topically-relevant but factually-imprecise context.
+  Separating their roles fixes this.
 """
 
 import json
@@ -32,21 +31,20 @@ torch.set_num_threads(4)
 from sentence_transformers import SentenceTransformer
 
 from eval_kit.llm_client import LLMClient
-from memory.store import MemoryStore
-from memory.writer import MemoryWriter
-from memory.updater import MemoryUpdater
-from memory.retriever import MemoryRetriever
+from memory import SummaryStore, TurnStore, MemoryWriter, MemoryUpdater, MemoryRetriever
 
 
 # ---------------------------------------------------------------------------
-# Simple answer prompt — no CoT (CoT confuses 3B models)
+# Answer prompt — raw turns only, no summaries
 # ---------------------------------------------------------------------------
 
 ANSWER_SYSTEM = (
     "You are answering questions about a past conversation between two people. "
-    "Use only the provided information to answer. "
+    "Below are relevant excerpts from that conversation. "
+    "Use only the provided dialogue to answer. "
     "Keep the answer short (a phrase or one sentence). "
-    "If the information does not contain the answer, reply 'unknown'."
+    "If the dialogue does not contain the answer, reply 'unknown'. "
+    "Be precise — if a number, date, or name is mentioned, use the exact value."
 )
 
 ANSWER_PROMPT = """{context}
@@ -58,22 +56,22 @@ ANSWER_PROMPT = """{context}
 
 
 class MyMemoryAgent:
-    """Hybrid memory agent: raw dialogue chunks + session summaries.
+    """Hybrid memory agent v3: session-summary routing + raw-turn evidence.
 
-    ingest:  store raw turns (like RAG) + generate session summaries (like memory)
-    answer:  semantic search over combined index → simple LLM generation
+    ingest:  store raw turns (TurnStore) + generate session summaries (SummaryStore)
+    answer:  summaries route to sessions → raw turns provide evidence → generate
     """
 
     def __init__(
         self,
         top_k: int = 8,
-        similarity_threshold: float = 0.92,
-        max_memories: int = 3000,
+        summary_k: int = 2,
+        max_turns: int = 3000,
         log_dir: str | None = None,
     ):
         self.llm = LLMClient()
 
-        # Embedding model
+        # Embedding model (CPU, ~100MB)
         embed_path = os.getenv("EMBED_MODEL_PATH", "models/bge-small-en-v1.5")
         embed_model_name = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
         if embed_path and Path(embed_path).exists():
@@ -87,17 +85,27 @@ class MyMemoryAgent:
             embed_dim = self.embed_model.get_sentence_embedding_dimension()
 
         self.top_k = top_k
-        self.store = MemoryStore(dim=embed_dim)
+        self.summary_k = summary_k
+
+        # v3: separate stores for summaries (router) and turns (evidence)
+        self.summary_store = SummaryStore(dim=embed_dim)
+        self.turn_store = TurnStore(dim=embed_dim)
+
         self.writer = MemoryWriter(self.llm)
-        self.updater = MemoryUpdater(self.embed_model, similarity_threshold, max_memories)
-        self.retriever = MemoryRetriever(self.embed_model, self.store, top_k=top_k)
+        self.updater = MemoryUpdater(max_turns=max_turns)
+        self.retriever = MemoryRetriever(
+            self.embed_model,
+            summary_store=self.summary_store,
+            turn_store=self.turn_store,
+            top_k=top_k,
+            summary_k=summary_k,
+        )
 
         # Logging
         self._log_dir = log_dir
         self._conv_log: dict = {
             "num_raw_turns": 0,
             "num_summaries": 0,
-            "total_indexed": 0,
             "qa_log": [],
         }
         self._speaker_a = "A"
@@ -108,12 +116,12 @@ class MyMemoryAgent:
     # ------------------------------------------------------------------
 
     def ingest(self, conversation: dict) -> None:
-        """Store raw turns + generate and index session summaries."""
+        """Store raw turns + generate session summaries in separate stores."""
         self._speaker_a = conversation.get("speaker_a", "A")
         self._speaker_b = conversation.get("speaker_b", "B")
         sessions = conversation.get("sessions", [])
 
-        # --- Layer 0: Raw dialogue turns (zero information loss) ---
+        # --- Layer 0: Raw dialogue turns (evidence layer) ---
         raw_items = []
         for sess in sessions:
             date_time = sess.get("date_time", "unknown")
@@ -131,46 +139,39 @@ class MyMemoryAgent:
             raw_embeds = self.embed_model.encode(
                 raw_texts, normalize_embeddings=True, show_progress_bar=False
             )
-            self.store.add(np.array(raw_embeds, dtype=np.float32), raw_items)
+            self.turn_store.add(np.array(raw_embeds, dtype=np.float32), raw_items)
 
-        # --- Layer 1: Session summaries (dense retrieval targets) ---
+        # --- Layer 1: Session summaries (router layer) ---
         new_summaries = self.writer.extract_from_sessions(
             sessions, self._speaker_a, self._speaker_b
         )
 
         if new_summaries:
-            existing_summaries = [
-                m for m in self.store.get_all()
-                if m.get("category") == "session_summary"
-            ]
-            to_add, to_delete = self.updater.merge(new_summaries, existing_summaries)
+            summary_texts = [m["text"] for m in new_summaries]
+            summary_embeds = self.embed_model.encode(
+                summary_texts, normalize_embeddings=True, show_progress_bar=False
+            )
+            self.summary_store.add(
+                np.array(summary_embeds, dtype=np.float32), new_summaries
+            )
 
-            for mem_id in to_delete:
-                self.store.delete(mem_id)
-
-            if to_add:
-                summary_texts = [m["text"] for m in to_add]
-                summary_embeds = self.embed_model.encode(
-                    summary_texts, normalize_embeddings=True, show_progress_bar=False
-                )
-                self.store.add(np.array(summary_embeds, dtype=np.float32), to_add)
-
-        # --- Prune if over capacity ---
-        pruned = self.updater.prune(self.store.get_all())
+        # --- Prune turn store if over capacity (rare) ---
+        pruned = self.updater.prune(self.turn_store.get_all())
         for mem_id in pruned:
-            self.store.delete(mem_id)
+            self.turn_store.delete(mem_id)
 
         # Logging
         self._conv_log["num_raw_turns"] = len(raw_items)
         self._conv_log["num_summaries"] = len(new_summaries)
-        self._conv_log["total_indexed"] = len(self.store)
+        self._conv_log["total_turns_in_store"] = len(self.turn_store)
+        self._conv_log["total_summaries_in_store"] = len(self.summary_store)
 
     # ------------------------------------------------------------------
     # Answer
     # ------------------------------------------------------------------
 
     def answer(self, question: str) -> str:
-        """Retrieve relevant chunks + summaries, then generate answer."""
+        """Two-stage retrieval: summaries route → raw turns provide evidence."""
         memories = self.retriever.retrieve(question)
         context = self.retriever.format_context(memories)
 
@@ -184,15 +185,14 @@ class MyMemoryAgent:
             answer = f"error: {e}"
 
         # Log
+        matched_sessions = set(
+            m["metadata"].get("session_id") for m in memories
+        )
         self._conv_log["qa_log"].append({
             "question": question,
             "answer": answer.strip(),
-            "retrieved_summaries": sum(
-                1 for m in memories if m["metadata"].get("category") == "session_summary"
-            ),
-            "retrieved_turns": sum(
-                1 for m in memories if m["metadata"].get("category") == "raw_turn"
-            ),
+            "num_retrieved_turns": len(memories),
+            "matched_sessions": sorted(matched_sessions),
             "full_prompt": prompt,
         })
 
