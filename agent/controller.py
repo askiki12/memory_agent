@@ -44,7 +44,8 @@ ANSWER_SYSTEM = (
     "Use only the provided dialogue to answer. "
     "Keep the answer short (a phrase or one sentence). "
     "If the dialogue does not contain the answer, reply 'unknown'. "
-    "Be precise — if a number, date, or name is mentioned, use the exact value."
+    "Be precise — if a number, date, or name is mentioned, use the exact value "
+    "from the dialogue. Do not guess or infer beyond what is stated."
 )
 
 ANSWER_PROMPT = """{context}
@@ -172,8 +173,8 @@ class MyMemoryAgent:
 
     def answer(self, question: str) -> str:
         """Two-stage retrieval: summaries route → raw turns provide evidence."""
-        memories = self.retriever.retrieve(question)
-        context = self.retriever.format_context(memories)
+        retrieved = self.retriever.retrieve(question)
+        context = self.retriever.format_context(retrieved)
 
         prompt = ANSWER_PROMPT.format(context=context, question=question)
 
@@ -185,14 +186,17 @@ class MyMemoryAgent:
             answer = f"error: {e}"
 
         # Log
-        matched_sessions = set(
-            m["metadata"].get("session_id") for m in memories
-        )
+        num_summaries = len(retrieved.get("summaries", []))
+        num_turns = len(retrieved.get("turns", []))
+        matched_sessions = sorted(set(
+            s["session_id"] for s in retrieved.get("summaries", [])
+        ))
         self._conv_log["qa_log"].append({
             "question": question,
             "answer": answer.strip(),
-            "num_retrieved_turns": len(memories),
-            "matched_sessions": sorted(matched_sessions),
+            "num_retrieved_summaries": num_summaries,
+            "num_retrieved_turns": num_turns,
+            "matched_sessions": matched_sessions,
             "full_prompt": prompt,
         })
 

@@ -1,29 +1,26 @@
-"""MemoryRetriever — two-stage retrieval with session routing.
+"""MemoryRetriever — parallel search with session-grouped context.
 
 v3 design:
-  Stage 1: Query summaries → find relevant sessions (router layer)
-  Stage 2: Retrieve raw turns, prioritizing turns from matched sessions
+  Summaries and raw turns are stored and searched independently (separate
+  stores → no FAISS slot competition). At format time, items are grouped
+  by session: the summary goes first (temporal/topical anchor), followed
+  by raw turns from that session (exact evidence).
 
-Summaries are NOT included in the generation context — they serve purely
-as retrieval targets to route the query to the right sessions. The LLM
-only sees raw dialogue turns with session headers for temporal context.
-
-Why this works better:
-  - Summaries have clean, query-like prose → good at finding relevant sessions
-  - Raw turns have exact facts and wording → good for generating precise answers
-  - Keeping them separate prevents summaries from crowding raw turns out of context
+  This grouping ensures the generation model reads the summary's resolved
+  dates and topics immediately before the corresponding dialogue turns,
+  combining the strengths of both sources.
 """
 
 
 class MemoryRetriever:
-    """Two-stage retriever: summaries route to sessions, turns provide evidence."""
+    """Parallel retriever with session-grouped context formatting."""
 
     def __init__(
         self,
         embed_model,
         summary_store,
         turn_store,
-        top_k: int = 8,
+        top_k: int = 10,
         summary_k: int = 2,
     ):
         self.embed_model = embed_model
@@ -32,71 +29,95 @@ class MemoryRetriever:
         self.top_k = top_k
         self.summary_k = summary_k
 
-    def _find_relevant_sessions(self, query_emb) -> set[int]:
-        """Stage 1: Use summaries to find which sessions are relevant."""
-        if len(self.summary_store) == 0:
-            return set()
+    def retrieve(self, query: str) -> dict:
+        """Parallel retrieval from both stores.
 
-        matches = self.summary_store.search(query_emb, k=self.summary_k)
-        return {m["session_id"] for m in matches}
-
-    def retrieve(self, query: str) -> list[dict]:
-        """Two-stage retrieval: summaries → sessions → boosted turn search.
-
-        1. Search summaries to identify relevant sessions
-        2. Retrieve raw turns with a bonus for turns from matched sessions
-        3. Return top-k turns (no summaries in results)
+        Returns dict with summaries list and turns list.
         """
-        if len(self.turn_store) == 0:
-            return []
+        result: dict = {"summaries": [], "turns": []}
 
         q_emb = self.embed_model.encode(
             [query], normalize_embeddings=True, show_progress_bar=False
         )
 
-        # Stage 1: find relevant sessions via summaries
-        matched_session_ids = self._find_relevant_sessions(q_emb)
+        if len(self.summary_store) > 0:
+            result["summaries"] = self.summary_store.search(
+                q_emb, k=self.summary_k
+            )
 
-        # Stage 2: retrieve more candidates than needed, then re-rank
-        fetch_k = max(self.top_k * 3, 15)
-        candidates = self.turn_store.search(q_emb, k=fetch_k)
+        if len(self.turn_store) > 0:
+            result["turns"] = self.turn_store.search(q_emb, k=self.top_k)
 
-        if matched_session_ids:
-            # Boost turns from matched sessions: they sort before non-matched
-            # turns, regardless of raw similarity. Within each group, original
-            # similarity order is preserved.
-            candidates.sort(key=lambda m: (
-                0 if m["metadata"].get("session_id") in matched_session_ids else 1,
-                -m["score"],
-            ))
+        return result
 
-        return candidates[:self.top_k]
+    def format_context(self, retrieved: dict) -> str:
+        """Format retrieved items grouped by session.
 
-    def format_context(self, memories: list[dict]) -> str:
-        """Format retrieved raw turns grouped by session with date headers.
+        For each session that appears in either summaries or turns:
+        - Session header with date
+        - Summary (if available) as a context note
+        - Raw dialogue turns from that session
 
-        Summaries are deliberately excluded — the LLM generates from exact
-        dialogue wording, not from lossy summaries.
+        Sessions with both summary AND turns are shown first (highest
+        relevance), followed by sessions with only turns or only summaries.
         """
-        if not memories:
+        summaries = retrieved.get("summaries", [])
+        turns = retrieved.get("turns", [])
+
+        if not summaries and not turns:
             return "No relevant information found."
 
-        # Group turns by session_id, preserving retrieval order within each
-        groups: dict[int, list[dict]] = {}
+        # Build a lookup from session_id → summary text
+        summary_by_session: dict[int, str] = {}
+        for s in summaries:
+            sid = s.get("session_id", -1)
+            if sid not in summary_by_session:
+                summary_by_session[sid] = s.get("text", "")
+
+        # Group turns by session_id
+        turn_groups: dict[int, list[dict]] = {}
         session_order: list[int] = []
-        for m in memories:
-            sid = m["metadata"].get("session_id", -1)
-            if sid not in groups:
-                groups[sid] = []
+        for t in turns:
+            sid = t["metadata"].get("session_id", -1)
+            if sid not in turn_groups:
+                turn_groups[sid] = []
                 session_order.append(sid)
-            groups[sid].append(m)
+            turn_groups[sid].append(t)
+
+        # Add any summary-only sessions
+        for sid in summary_by_session:
+            if sid not in turn_groups:
+                session_order.append(sid)
+                turn_groups[sid] = []
+
+        # Sort sessions: those with BOTH summary+turns first
+        def session_priority(sid: int) -> tuple[int, int]:
+            has_summary = 0 if sid in summary_by_session else 1
+            has_turns = 0 if turn_groups.get(sid) else 1
+            return (has_summary + has_turns, sid)
+
+        session_order.sort(key=session_priority)
 
         lines = []
         for sid in session_order:
-            turns = groups[sid]
-            date = turns[0]["metadata"].get("date_time", "unknown")
-            lines.append(f"--- Session {sid} ({date}) ---")
-            for m in turns:
-                lines.append(m.get("text", ""))
+            turns_in_session = turn_groups.get(sid, [])
+            date = (
+                turns_in_session[0]["metadata"].get("date_time", "unknown")
+                if turns_in_session
+                else "unknown"
+            )
 
-        return "\n".join(lines)
+            # Session header with date
+            lines.append(f"--- Session {sid} ({date}) ---")
+
+            # Summary first (temporal/topical anchor)
+            if sid in summary_by_session:
+                lines.append(f"[Context] {summary_by_session[sid]}")
+
+            # Raw turns (exact evidence)
+            if turns_in_session:
+                lines.append("[Dialogue]")
+                for t in turns_in_session:
+                    lines.append(t.get("text", ""))
+
+        return "\n".join(lines) if lines else "No relevant information found."
