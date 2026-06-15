@@ -1,142 +1,78 @@
-"""MemoryRetriever — parallel search with session-grouped context.
+"""MemoryRetriever — simple semantic search with evidence-first formatting.
 
-v3 design:
-  Summaries and raw turns are stored and searched independently (separate
-  stores → no FAISS slot competition). At format time, items are grouped
-  by session: the summary goes first (temporal/topical anchor), followed
-  by raw turns from that session (exact evidence).
+v3 improvements over v2:
+  - Raw dialogue turns are presented FIRST (primary evidence)
+  - Session summaries follow as supporting context notes
+  - top_k increased to 10 (more raw turns in context)
 
-  This grouping ensures the generation model reads the summary's resolved
-  dates and topics immediately before the corresponding dialogue turns,
-  combining the strengths of both sources.
+The retrieval itself is unchanged from v2: embed query → cosine similarity
+→ top-k. The value is in how results are formatted for the generation model.
 """
 
 
 class MemoryRetriever:
-    """Parallel retriever with session-grouped context formatting."""
+    """Simple semantic retrieval with evidence-first context formatting."""
 
-    def __init__(
-        self,
-        embed_model,
-        summary_store,
-        turn_store,
-        top_k: int = 10,
-        summary_k: int = 2,
-    ):
+    def __init__(self, embed_model, store, top_k: int = 10):
         self.embed_model = embed_model
-        self.summary_store = summary_store
-        self.turn_store = turn_store
+        self.store = store
         self.top_k = top_k
-        self.summary_k = summary_k
 
-    def retrieve(self, query: str, max_per_session: int = 5) -> dict:
-        """Parallel retrieval from both stores with session diversity.
-
-        To support multi-hop questions, we limit the number of turns from
-        any single session, ensuring the context spans 2+ sessions when
-        the query touches on multiple topics.
-
-        Returns dict with summaries list and turns list.
-        """
-        result: dict = {"summaries": [], "turns": []}
+    def retrieve(self, query: str) -> list[dict]:
+        """Retrieve top-k items by cosine similarity."""
+        if len(self.store) == 0:
+            return []
 
         q_emb = self.embed_model.encode(
             [query], normalize_embeddings=True, show_progress_bar=False
         )
+        return self.store.search(q_emb, k=self.top_k)
 
-        if len(self.summary_store) > 0:
-            result["summaries"] = self.summary_store.search(
-                q_emb, k=self.summary_k
-            )
+    def format_context(self, memories: list[dict]) -> str:
+        """Format retrieved items — raw dialogue first, summaries as notes.
 
-        if len(self.turn_store) > 0:
-            # Fetch more candidates than needed to allow diversity filtering
-            fetch_k = max(self.top_k * 3, 20)
-            candidates = self.turn_store.search(q_emb, k=fetch_k)
-
-            # Apply session diversity: at most max_per_session turns per session
-            seen_per_session: dict[int, int] = {}
-            diverse_turns = []
-            for c in candidates:
-                sid = c["metadata"].get("session_id", -1)
-                count = seen_per_session.get(sid, 0)
-                if count < max_per_session:
-                    diverse_turns.append(c)
-                    seen_per_session[sid] = count + 1
-                if len(diverse_turns) >= self.top_k:
-                    break
-
-            result["turns"] = diverse_turns
-
-        return result
-
-    def format_context(self, retrieved: dict) -> str:
-        """Format retrieved items grouped by session.
-
-        For each session that appears in either summaries or turns:
-        - Session header with date
-        - Summary (if available) as a context note
-        - Raw dialogue turns from that session
-
-        Sessions with both summary AND turns are shown first (highest
-        relevance), followed by sessions with only turns or only summaries.
+        v3 key change: raw turns are the primary evidence (shown first),
+        summaries provide temporal/topical context (shown after).
+        This ensures the generation model anchors on exact dialogue
+        wording before seeing the compressed summary view.
         """
-        summaries = retrieved.get("summaries", [])
-        turns = retrieved.get("turns", [])
-
-        if not summaries and not turns:
+        if not memories:
             return "No relevant information found."
 
-        # Build a lookup from session_id → summary text
-        summary_by_session: dict[int, str] = {}
-        for s in summaries:
-            sid = s.get("session_id", -1)
-            if sid not in summary_by_session:
-                summary_by_session[sid] = s.get("text", "")
-
-        # Group turns by session_id
-        turn_groups: dict[int, list[dict]] = {}
-        session_order: list[int] = []
-        for t in turns:
-            sid = t["metadata"].get("session_id", -1)
-            if sid not in turn_groups:
-                turn_groups[sid] = []
-                session_order.append(sid)
-            turn_groups[sid].append(t)
-
-        # Add any summary-only sessions
-        for sid in summary_by_session:
-            if sid not in turn_groups:
-                session_order.append(sid)
-                turn_groups[sid] = []
-
-        # Sort sessions: those with BOTH summary+turns first
-        def session_priority(sid: int) -> tuple[int, int]:
-            has_summary = 0 if sid in summary_by_session else 1
-            has_turns = 0 if turn_groups.get(sid) else 1
-            return (has_summary + has_turns, sid)
-
-        session_order.sort(key=session_priority)
+        summaries = [m for m in memories
+                     if m["metadata"].get("category") == "session_summary"]
+        turns = [m for m in memories
+                 if m["metadata"].get("category") == "raw_turn"]
 
         lines = []
-        for sid in session_order:
-            turns_in_session = turn_groups.get(sid, [])
-            date = (
-                turns_in_session[0]["metadata"].get("date_time", "unknown")
-                if turns_in_session
-                else "unknown"
-            )
 
-            # Session header with date
-            lines.append(f"--- Session {sid} ({date}) ---")
+        # --- Raw dialogue turns first: primary evidence ---
+        if turns:
+            # Group by session for readability
+            groups: dict[int, list[dict]] = {}
+            session_order: list[int] = []
+            for m in turns:
+                sid = m["metadata"].get("session_id", -1)
+                if sid not in groups:
+                    groups[sid] = []
+                    session_order.append(sid)
+                groups[sid].append(m)
 
-            # Summary as natural first line after header (no artificial labels)
-            if sid in summary_by_session:
-                lines.append(summary_by_session[sid])
+            lines.append("=== Relevant Dialogue ===")
+            for sid in session_order:
+                grp = groups[sid]
+                date = grp[0]["metadata"].get("date_time", "unknown")
+                lines.append(f"--- Session {sid} ({date}) ---")
+                for m in grp:
+                    lines.append(m.get("text", ""))
 
-            # Raw dialogue turns
-            if turns_in_session:
-                for t in turns_in_session:
-                    lines.append(t.get("text", ""))
+        # --- Summaries second: context anchors ---
+        if summaries:
+            lines.append("\n=== Session Context ===")
+            for m in summaries:
+                sid = m["metadata"].get("session_id", "?")
+                date = m["metadata"].get("date_time", "")
+                text = m.get("text", "")
+                lines.append(f"[Session {sid} @ {date}] {text}")
 
         return "\n".join(lines) if lines else "No relevant information found."

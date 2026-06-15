@@ -1,21 +1,21 @@
-"""Hybrid Memory Agent v3 — two-stage retrieval with session routing.
+"""Hybrid Memory Agent v3 — single-index with evidence-first formatting.
 
-Architecture (v3):
-  SummaryStore (plain list) — summaries as "router" to find sessions
-  TurnStore (FAISS) — raw dialogue turns as "evidence" for generation
+Architecture (v3, evolved from v2):
+  Single FAISS index stores both session summaries and raw dialogue turns.
+  Retrieval is pure semantic search (same as v2). The key improvements are:
 
-  ingest:  generate session summaries → store in SummaryStore
-           store raw turns in TurnStore
-  answer:  Stage 1: query summaries → find relevant sessions
-           Stage 2: retrieve raw turns with session-aware boosting
-           Generate answer from raw turns only (no lossy summaries in context)
+  1. Evidence-first formatting: raw dialogue turns shown FIRST, summaries
+     as supporting context SECOND. This ensures the model reads exact
+     dialogue wording before the compressed summary view.
+  2. top_k=10 (vs 8 in v2): more raw turns in context.
+  3. Ghost-vector compensation: fetch extra candidates to offset soft-deletes.
+  4. Cleaner prompt: simple, no restrictive "don't infer" language.
 
-Key insight:
-  Summaries have clean, query-like prose → excellent for semantic routing.
-  Raw turns have exact facts and wording → essential for precise answers.
-  Mixing them in one FAISS index (v2) caused summaries to crowd out raw
-  turns, giving topically-relevant but factually-imprecise context.
-  Separating their roles fixes this.
+Why the single-index approach works (learned from v3 experiments):
+  Summaries and raw turns competing for the same top-k slots is a FEATURE,
+  not a bug. It acts as a natural relevance filter — only the most
+  semantically similar items make it into context. Separating stores
+  (parallel retrieval) forces summaries into every context, adding noise.
 """
 
 import json
@@ -31,19 +31,21 @@ torch.set_num_threads(4)
 from sentence_transformers import SentenceTransformer
 
 from eval_kit.llm_client import LLMClient
-from memory import SummaryStore, TurnStore, MemoryWriter, MemoryUpdater, MemoryRetriever
+from memory.store import MemoryStore
+from memory.writer import MemoryWriter
+from memory.updater import MemoryUpdater
+from memory.retriever import MemoryRetriever
 
 
 # ---------------------------------------------------------------------------
-# Answer prompt — raw turns only, no summaries
+# Answer prompt — simple, not overly restrictive
 # ---------------------------------------------------------------------------
 
 ANSWER_SYSTEM = (
     "You are answering questions about a past conversation between two people. "
-    "Below are relevant excerpts from that conversation. "
-    "Use only the provided dialogue to answer. "
+    "Use only the provided information to answer. "
     "Keep the answer short (a phrase or one sentence). "
-    "If the dialogue does not contain the answer, reply 'unknown'."
+    "If the information does not contain the answer, reply 'unknown'."
 )
 
 ANSWER_PROMPT = """{context}
@@ -55,22 +57,22 @@ ANSWER_PROMPT = """{context}
 
 
 class MyMemoryAgent:
-    """Hybrid memory agent v3: session-summary routing + raw-turn evidence.
+    """Hybrid memory agent v3: single-index retrieval + evidence-first formatting.
 
-    ingest:  store raw turns (TurnStore) + generate session summaries (SummaryStore)
-    answer:  summaries route to sessions → raw turns provide evidence → generate
+    ingest:  store raw turns + generate session summaries (same as v2)
+    answer:  semantic search → raw-first context → LLM generation
     """
 
     def __init__(
         self,
-        top_k: int = 8,
-        summary_k: int = 2,
-        max_turns: int = 3000,
+        top_k: int = 10,
+        similarity_threshold: float = 0.92,
+        max_memories: int = 3000,
         log_dir: str | None = None,
     ):
         self.llm = LLMClient()
 
-        # Embedding model (CPU, ~100MB)
+        # Embedding model
         embed_path = os.getenv("EMBED_MODEL_PATH", "models/bge-small-en-v1.5")
         embed_model_name = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
         if embed_path and Path(embed_path).exists():
@@ -84,27 +86,20 @@ class MyMemoryAgent:
             embed_dim = self.embed_model.get_sentence_embedding_dimension()
 
         self.top_k = top_k
-        self.summary_k = summary_k
-
-        # v3: separate stores for summaries (router) and turns (evidence)
-        self.summary_store = SummaryStore(dim=embed_dim)
-        self.turn_store = TurnStore(dim=embed_dim)
-
+        self.store = MemoryStore(dim=embed_dim)
         self.writer = MemoryWriter(self.llm)
-        self.updater = MemoryUpdater(max_turns=max_turns)
-        self.retriever = MemoryRetriever(
-            self.embed_model,
-            summary_store=self.summary_store,
-            turn_store=self.turn_store,
-            top_k=top_k,
-            summary_k=summary_k,
+        self.updater = MemoryUpdater(
+            self.embed_model, similarity_threshold, max_memories
         )
+        self.retriever = MemoryRetriever(self.embed_model, self.store, top_k=top_k)
 
         # Logging
         self._log_dir = log_dir
         self._conv_log: dict = {
             "num_raw_turns": 0,
             "num_summaries": 0,
+            "total_indexed": 0,
+            "ghost_vectors": 0,
             "qa_log": [],
         }
         self._speaker_a = "A"
@@ -115,12 +110,12 @@ class MyMemoryAgent:
     # ------------------------------------------------------------------
 
     def ingest(self, conversation: dict) -> None:
-        """Store raw turns + generate session summaries in separate stores."""
+        """Store raw turns + generate and index session summaries."""
         self._speaker_a = conversation.get("speaker_a", "A")
         self._speaker_b = conversation.get("speaker_b", "B")
         sessions = conversation.get("sessions", [])
 
-        # --- Layer 0: Raw dialogue turns (evidence layer) ---
+        # --- Raw dialogue turns ---
         raw_items = []
         for sess in sessions:
             date_time = sess.get("date_time", "unknown")
@@ -138,41 +133,51 @@ class MyMemoryAgent:
             raw_embeds = self.embed_model.encode(
                 raw_texts, normalize_embeddings=True, show_progress_bar=False
             )
-            self.turn_store.add(np.array(raw_embeds, dtype=np.float32), raw_items)
+            self.store.add(np.array(raw_embeds, dtype=np.float32), raw_items)
 
-        # --- Layer 1: Session summaries (router layer) ---
+        # --- Session summaries ---
         new_summaries = self.writer.extract_from_sessions(
             sessions, self._speaker_a, self._speaker_b
         )
 
         if new_summaries:
-            summary_texts = [m["text"] for m in new_summaries]
-            summary_embeds = self.embed_model.encode(
-                summary_texts, normalize_embeddings=True, show_progress_bar=False
-            )
-            self.summary_store.add(
-                np.array(summary_embeds, dtype=np.float32), new_summaries
-            )
+            existing_summaries = [
+                m for m in self.store.get_all()
+                if m.get("category") == "session_summary"
+            ]
+            to_add, to_delete = self.updater.merge(new_summaries, existing_summaries)
 
-        # --- Prune turn store if over capacity (rare) ---
-        pruned = self.updater.prune(self.turn_store.get_all())
+            for mem_id in to_delete:
+                self.store.delete(mem_id)
+
+            if to_add:
+                summary_texts = [m["text"] for m in to_add]
+                summary_embeds = self.embed_model.encode(
+                    summary_texts, normalize_embeddings=True, show_progress_bar=False
+                )
+                self.store.add(
+                    np.array(summary_embeds, dtype=np.float32), to_add
+                )
+
+        # --- Prune if over capacity ---
+        pruned = self.updater.prune(self.store.get_all())
         for mem_id in pruned:
-            self.turn_store.delete(mem_id)
+            self.store.delete(mem_id)
 
         # Logging
         self._conv_log["num_raw_turns"] = len(raw_items)
         self._conv_log["num_summaries"] = len(new_summaries)
-        self._conv_log["total_turns_in_store"] = len(self.turn_store)
-        self._conv_log["total_summaries_in_store"] = len(self.summary_store)
+        self._conv_log["total_indexed"] = len(self.store)
+        self._conv_log["ghost_vectors"] = self.store.ghost_count
 
     # ------------------------------------------------------------------
     # Answer
     # ------------------------------------------------------------------
 
     def answer(self, question: str) -> str:
-        """Two-stage retrieval: summaries route → raw turns provide evidence."""
-        retrieved = self.retriever.retrieve(question)
-        context = self.retriever.format_context(retrieved)
+        """Retrieve relevant items, format with evidence first, generate."""
+        memories = self.retriever.retrieve(question)
+        context = self.retriever.format_context(memories)
 
         prompt = ANSWER_PROMPT.format(context=context, question=question)
 
@@ -184,17 +189,17 @@ class MyMemoryAgent:
             answer = f"error: {e}"
 
         # Log
-        num_summaries = len(retrieved.get("summaries", []))
-        num_turns = len(retrieved.get("turns", []))
-        matched_sessions = sorted(set(
-            s["session_id"] for s in retrieved.get("summaries", [])
-        ))
         self._conv_log["qa_log"].append({
             "question": question,
             "answer": answer.strip(),
-            "num_retrieved_summaries": num_summaries,
-            "num_retrieved_turns": num_turns,
-            "matched_sessions": matched_sessions,
+            "retrieved_summaries": sum(
+                1 for m in memories
+                if m["metadata"].get("category") == "session_summary"
+            ),
+            "retrieved_turns": sum(
+                1 for m in memories
+                if m["metadata"].get("category") == "raw_turn"
+            ),
             "full_prompt": prompt,
         })
 
