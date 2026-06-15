@@ -5,9 +5,9 @@
     "reference": "June 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "This summer",
+    "prediction": "Next month.",
     "error": null,
-    "latency_sec": 0.184
+    "latency_sec": 0.227
   },
   {
     "qa_id": "conv-26_q15",
@@ -15,9 +15,9 @@
     "reference": "pottery, camping, painting, swimming",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Painting, pottery, clarinet playing, and spending time with children.",
+    "prediction": "Melanie partakes in hiking, exploring forests, camping at the beach, and visiting museums.",
     "error": null,
-    "latency_sec": 0.331
+    "latency_sec": 0.482
   },
   {
     "qa_id": "conv-26_q25",
@@ -25,9 +25,9 @@
     "reference": "10 July 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Two days ago, on July 10, 2023.",
     "error": null,
-    "latency_sec": 0.168
+    "latency_sec": 0.403
   },
   {
     "qa_id": "conv-26_q26",
@@ -37,7 +37,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.176
+    "latency_sec": 0.306
   },
   {
     "qa_id": "conv-26_q29",
@@ -45,9 +45,9 @@
     "reference": "The Friday before 15 July 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "1:51 pm on 15 July, 2023",
+    "prediction": "On Friday, July 15, 2023.",
     "error": null,
-    "latency_sec": 0.312
+    "latency_sec": 0.362
   },
   {
     "qa_id": "conv-26_q31",
@@ -55,9 +55,9 @@
     "reference": "The week before 27 June 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "Last week in June.",
+    "prediction": "Melanie went camping at the beach in June.",
     "error": null,
-    "latency_sec": 0.192
+    "latency_sec": 0.31
   },
   {
     "qa_id": "conv-26_q42",
@@ -67,7 +67,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.189
+    "latency_sec": 0.196
   },
   {
     "qa_id": "conv-26_q43",
@@ -75,9 +75,9 @@
     "reference": "abstract art",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Caroline makes art about expressing her trans experience and helping people understand the trans community.",
+    "prediction": "Caroline makes paintings.",
     "error": null,
-    "latency_sec": 0.334
+    "latency_sec": 0.177
   },
   {
     "qa_id": "conv-26_q45",
@@ -85,9 +85,9 @@
     "reference": "The Friday before 14 August 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "14 August, 2023",
+    "prediction": "On August 14, 2023, Caroline attended a pride parade.",
     "error": null,
-    "latency_sec": 0.232
+    "latency_sec": 0.384
   },
   {
     "qa_id": "conv-26_q59",
@@ -97,7 +97,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.168
+    "latency_sec": 0.312
   },
   {
     "qa_id": "conv-26_q61",
@@ -105,9 +105,9 @@
     "reference": "Summer Sounds, Matt Patterson",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Melanie is a fan of both classical music like Bach and Mozart, and modern music like Ed Sheeran's 'Perfect'.",
+    "prediction": "Melanie has seen Ed Sheeran and Bach.",
     "error": null,
-    "latency_sec": 0.424
+    "latency_sec": 0.258
   },
   {
     "qa_id": "conv-26_q64",
@@ -117,7 +117,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.173
+    "latency_sec": 0.151
   },
   {
     "qa_id": "conv-26_q69",
@@ -125,9 +125,9 @@
     "reference": "Thoughtful, authentic, driven",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Caroline is open to support and self-acceptance.",
+    "prediction": "Melanie might say Caroline has dedication, passion, and strength.",
     "error": null,
-    "latency_sec": 0.29
+    "latency_sec": 0.346
   },
   {
     "qa_id": "conv-26_q71",
@@ -135,9 +135,9 @@
     "reference": "\"Becoming Nicole\"",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Melanie read a book that reminds her to always pursue her dreams.",
     "error": null,
-    "latency_sec": 0.178
+    "latency_sec": 0.408
   },
   {
     "qa_id": "conv-26_q81",
@@ -147,7 +147,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.185
+    "latency_sec": 0.178
   },
   {
     "qa_id": "conv-26_q82",
@@ -155,9 +155,9 @@
     "reference": "mental health",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "The charity race raised awareness for mental health.",
     "error": null,
-    "latency_sec": 0.193
+    "latency_sec": 0.269
   },
   {
     "qa_id": "conv-26_q85",
@@ -165,9 +165,9 @@
     "reference": "researching adoption agencies",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Caroline plans a family outing this summer.",
+    "prediction": "Caroline plans to make some awesome memories with Melanie.",
     "error": null,
-    "latency_sec": 0.245
+    "latency_sec": 0.248
   },
   {
     "qa_id": "conv-26_q101",
@@ -177,7 +177,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.157
+    "latency_sec": 0.207
   },
   {
     "qa_id": "conv-26_q141",
@@ -185,9 +185,9 @@
     "reference": "Freedom and being true to herself.",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Caroline's drawing symbolizes love and acceptance for those who need it.",
+    "prediction": "Freedom and being real.",
     "error": null,
-    "latency_sec": 0.297
+    "latency_sec": 0.299
   },
   {
     "qa_id": "conv-30_q3",
@@ -195,9 +195,9 @@
     "reference": "They lost their jobs and decided to start their own businesses.",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Both Jon and Gina support each other's businesses and dreams.",
+    "prediction": "Both Jon and Gina are entrepreneurs running their own businesses and supporting each other's dreams.",
     "error": null,
-    "latency_sec": 0.315
+    "latency_sec": 0.493
   },
   {
     "qa_id": "conv-30_q5",
@@ -205,9 +205,9 @@
     "reference": "By the water, with natural light and Marley flooring",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "It should have great natural light.",
     "error": null,
-    "latency_sec": 0.193
+    "latency_sec": 0.216
   },
   {
     "qa_id": "conv-30_q12",
@@ -215,9 +215,9 @@
     "reference": "March, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "2:35 pm on 16 March, 2023",
     "error": null,
-    "latency_sec": 0.188
+    "latency_sec": 0.41
   },
   {
     "qa_id": "conv-30_q15",
@@ -227,7 +227,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.349
+    "latency_sec": 0.186
   },
   {
     "qa_id": "conv-30_q19",
@@ -235,9 +235,9 @@
     "reference": "10 May, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On 11 May, 2023, Gina interviewed for a design internship.",
     "error": null,
-    "latency_sec": 0.359
+    "latency_sec": 0.414
   },
   {
     "qa_id": "conv-30_q22",
@@ -245,9 +245,9 @@
     "reference": "June, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "13 June, 2023",
     "error": null,
-    "latency_sec": 0.355
+    "latency_sec": 0.321
   },
   {
     "qa_id": "conv-30_q33",
@@ -255,9 +255,9 @@
     "reference": "20 June, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On June 21, 2023, Jon visited networking events for his store.",
     "error": null,
-    "latency_sec": 0.337
+    "latency_sec": 0.47
   },
   {
     "qa_id": "conv-30_q75",
@@ -265,9 +265,9 @@
     "reference": "Let's live it up and make some great memories",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Remember Jon, Just do it!",
+    "prediction": "Thanks, Jon! See you at the event!",
     "error": null,
-    "latency_sec": 0.219
+    "latency_sec": 0.393
   },
   {
     "qa_id": "conv-41_q7",
@@ -277,7 +277,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.178
+    "latency_sec": 0.441
   },
   {
     "qa_id": "conv-41_q14",
@@ -285,9 +285,9 @@
     "reference": "Yes",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "Yes, John can be considered a patriotic person for his support and respect towards veterans.",
     "error": null,
-    "latency_sec": 0.193
+    "latency_sec": 0.426
   },
   {
     "qa_id": "conv-41_q17",
@@ -295,9 +295,9 @@
     "reference": "Political science, Public administration, Public affairs",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "John's degree might be in policymaking or education.",
     "error": null,
-    "latency_sec": 0.197
+    "latency_sec": 0.273
   },
   {
     "qa_id": "conv-41_q22",
@@ -305,9 +305,9 @@
     "reference": "March 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "Last month on 18 April, John went to a convention with colleagues.",
+    "prediction": "Last month.",
     "error": null,
-    "latency_sec": 0.362
+    "latency_sec": 0.257
   },
   {
     "qa_id": "conv-41_q26",
@@ -317,7 +317,7 @@
     "category_name": "single_hop",
     "prediction": "Maria bought a cross necklace to feel closer to her faith.",
     "error": null,
-    "latency_sec": 0.313
+    "latency_sec": 0.347
   },
   {
     "qa_id": "conv-41_q29",
@@ -325,9 +325,9 @@
     "reference": "Chili cook-off, ring-toss tournament",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Maria is planning a ring-toss tournament for the homeless shelter's fundraiser.",
     "error": null,
-    "latency_sec": 0.188
+    "latency_sec": 0.332
   },
   {
     "qa_id": "conv-41_q41",
@@ -337,7 +337,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.204
+    "latency_sec": 0.194
   },
   {
     "qa_id": "conv-41_q48",
@@ -345,9 +345,9 @@
     "reference": "The sunday before 3` July 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "Last Sunday.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.215
+    "latency_sec": 0.257
   },
   {
     "qa_id": "conv-41_q52",
@@ -355,9 +355,9 @@
     "reference": "Cindy, Laura",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Cindy, a resident at the homeless shelter, wrote a heartfelt note of gratitude.",
+    "prediction": "Cindy and Laura have written notes of gratitude to Maria.",
     "error": null,
-    "latency_sec": 0.331
+    "latency_sec": 0.316
   },
   {
     "qa_id": "conv-41_q53",
@@ -365,9 +365,9 @@
     "reference": "2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "Last year, on 17 July, John helped renovate a rundown community center back home.",
+    "prediction": "5 August, 2023",
     "error": null,
-    "latency_sec": 0.368
+    "latency_sec": 0.299
   },
   {
     "qa_id": "conv-41_q57",
@@ -375,9 +375,9 @@
     "reference": "Toy drive, Community food drive, veterans, domestic violence",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "John has done events for a 5K charity run, a community event, and a local organization that helps victims of domestic abuse.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.422
+    "latency_sec": 0.194
   },
   {
     "qa_id": "conv-41_q62",
@@ -387,7 +387,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.175
+    "latency_sec": 0.22
   },
   {
     "qa_id": "conv-41_q64",
@@ -395,9 +395,9 @@
     "reference": "Shelter coordinator, Counselor",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "the perfect job for you",
     "error": null,
-    "latency_sec": 0.188
+    "latency_sec": 0.183
   },
   {
     "qa_id": "conv-41_q65",
@@ -405,9 +405,9 @@
     "reference": "Improving education and infrastructure",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "John's main focus in local politics is improving education and infrastructure.",
+    "prediction": "John's main focus in local politics is improving education and infrastructure in their community.",
     "error": null,
-    "latency_sec": 0.305
+    "latency_sec": 0.401
   },
   {
     "qa_id": "conv-41_q108",
@@ -415,9 +415,9 @@
     "reference": "Like being in a fairy tale",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "It was truly magical!",
     "error": null,
-    "latency_sec": 0.178
+    "latency_sec": 0.256
   },
   {
     "qa_id": "conv-41_q113",
@@ -425,9 +425,9 @@
     "reference": "self-doubt",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Getting sponsors for the 5K charity run.",
+    "prediction": "The worst challenge was self-doubt.",
     "error": null,
-    "latency_sec": 0.265
+    "latency_sec": 0.264
   },
   {
     "qa_id": "conv-41_q117",
@@ -437,7 +437,7 @@
     "category_name": "open_domain",
     "prediction": "John participated in a marching event for veterans' rights.",
     "error": null,
-    "latency_sec": 0.265
+    "latency_sec": 0.316
   },
   {
     "qa_id": "conv-41_q134",
@@ -445,9 +445,9 @@
     "reference": "awestruck and humbled",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "John's kids were awestruck and humbled.",
+    "prediction": "It really made an impact on my kids.",
     "error": null,
-    "latency_sec": 0.272
+    "latency_sec": 0.308
   },
   {
     "qa_id": "conv-42_q0",
@@ -457,7 +457,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.184
+    "latency_sec": 0.31
   },
   {
     "qa_id": "conv-42_q14",
@@ -467,7 +467,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.171
+    "latency_sec": 0.302
   },
   {
     "qa_id": "conv-42_q19",
@@ -475,9 +475,9 @@
     "reference": "twice",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "3 times",
     "error": null,
-    "latency_sec": 0.177
+    "latency_sec": 0.193
   },
   {
     "qa_id": "conv-42_q20",
@@ -485,9 +485,9 @@
     "reference": "May 2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On 20 May, 2022.",
     "error": null,
-    "latency_sec": 0.18
+    "latency_sec": 0.374
   },
   {
     "qa_id": "conv-42_q30",
@@ -495,9 +495,9 @@
     "reference": "Screenplays,books, online blog posts, journal",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Joanna writes dramas and emotionally-driven films.",
+    "prediction": "Joanna writes dramas and romcoms.",
     "error": null,
-    "latency_sec": 0.252
+    "latency_sec": 0.26
   },
   {
     "qa_id": "conv-42_q32",
@@ -507,7 +507,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.168
+    "latency_sec": 0.111
   },
   {
     "qa_id": "conv-42_q33",
@@ -515,9 +515,9 @@
     "reference": "The week before 14August, 2022.",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On 14 August, 2022.",
     "error": null,
-    "latency_sec": 0.183
+    "latency_sec": 0.333
   },
   {
     "qa_id": "conv-42_q35",
@@ -525,9 +525,9 @@
     "reference": "The weekend of 22August, 2022.",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "7 November, 2022 at 8:10 pm",
+    "prediction": "On 22 August, 2022, Nate took time off to chill with his pets.",
     "error": null,
-    "latency_sec": 0.325
+    "latency_sec": 0.436
   },
   {
     "qa_id": "conv-42_q37",
@@ -535,9 +535,9 @@
     "reference": "21 August, 2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "10:57 am on 22 August, 2022",
+    "prediction": "Yesterday",
     "error": null,
-    "latency_sec": 0.324
+    "latency_sec": 0.149
   },
   {
     "qa_id": "conv-42_q43",
@@ -547,7 +547,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.165
+    "latency_sec": 0.198
   },
   {
     "qa_id": "conv-42_q64",
@@ -555,9 +555,9 @@
     "reference": "The Saturday before 7November, 2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Last Saturday, a week ago from November 7, 2022.",
     "error": null,
-    "latency_sec": 0.343
+    "latency_sec": 0.37
   },
   {
     "qa_id": "conv-42_q66",
@@ -565,9 +565,9 @@
     "reference": "an animalkeeper at a localzoo and workingwith turtles; as heknows a great dealabout turtles andhow to care for them,and he enjoys it.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Nate might consider creating gaming content for YouTube after his gaming achievements.",
+    "prediction": "Nate might consider a career in gaming content creation for YouTube.",
     "error": null,
-    "latency_sec": 0.303
+    "latency_sec": 0.298
   },
   {
     "qa_id": "conv-42_q81",
@@ -575,9 +575,9 @@
     "reference": "dairy free vanilla cake with strawberry filling and coconut cream frosting, parfait, strawberry chocolate cake, chocolate coconut cupcakes, chocolate raspberry tart, chocolate cake with raspberries, blueberry cheesecake bars",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Joanna has made dairy-free desserts experimenting with flavors like chocolate, raspberry, and coconut.",
+    "prediction": "Joanna has made cookies, pies, cakes, and a dessert.",
     "error": null,
-    "latency_sec": 0.338
+    "latency_sec": 0.282
   },
   {
     "qa_id": "conv-42_q84",
@@ -587,7 +587,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.175
+    "latency_sec": 0.13
   },
   {
     "qa_id": "conv-42_q87",
@@ -597,7 +597,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.171
+    "latency_sec": 0.166
   },
   {
     "qa_id": "conv-42_q91",
@@ -605,9 +605,9 @@
     "reference": "dragons",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Nate's favorite book series is about adventures, magic, and great characters.",
     "error": null,
-    "latency_sec": 0.17
+    "latency_sec": 0.401
   },
   {
     "qa_id": "conv-42_q133",
@@ -615,9 +615,9 @@
     "reference": "7",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "7 people attended the gaming party hosted by Nate in June 2022.",
     "error": null,
-    "latency_sec": 0.163
+    "latency_sec": 0.341
   },
   {
     "qa_id": "conv-42_q157",
@@ -627,7 +627,7 @@
     "category_name": "open_domain",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.178
+    "latency_sec": 0.138
   },
   {
     "qa_id": "conv-42_q161",
@@ -635,9 +635,9 @@
     "reference": "a bookmark",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Joanna made a bookmark for one of the ladies at her writing club.",
+    "prediction": "Joanna made a cute little bookmark for one of the ladies at her writing club.",
     "error": null,
-    "latency_sec": 0.331
+    "latency_sec": 0.362
   },
   {
     "qa_id": "conv-42_q188",
@@ -647,7 +647,7 @@
     "category_name": "open_domain",
     "prediction": "Nate is creating gaming content for YouTube.",
     "error": null,
-    "latency_sec": 0.246
+    "latency_sec": 0.251
   },
   {
     "qa_id": "conv-42_q193",
@@ -655,9 +655,9 @@
     "reference": "The incredible sunset and surrounding beauty",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Joanna was inspired by nature and finds it calming to be surrounded by its beauty.",
+    "prediction": "The sunset she saw while hiking the other day.",
     "error": null,
-    "latency_sec": 0.335
+    "latency_sec": 0.283
   },
   {
     "qa_id": "conv-43_q1",
@@ -665,9 +665,9 @@
     "reference": "get endorsements, build his brand, do charity work",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "John's goals for his career that are not related to his basketball skills include improving his shooting percentage, making a difference away from the court through charity or inspiring people, and building his brand through endorsements.",
     "error": null,
-    "latency_sec": 0.196
+    "latency_sec": 0.983
   },
   {
     "qa_id": "conv-43_q8",
@@ -675,9 +675,9 @@
     "reference": "Under Armour",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "The renowned outdoor gear company that signed John up for an endorsement deal is unknown from the given information.",
     "error": null,
-    "latency_sec": 0.215
+    "latency_sec": 0.473
   },
   {
     "qa_id": "conv-43_q11",
@@ -687,7 +687,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.21
+    "latency_sec": 0.253
   },
   {
     "qa_id": "conv-43_q15",
@@ -697,7 +697,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.193
+    "latency_sec": 0.224
   },
   {
     "qa_id": "conv-43_q22",
@@ -705,9 +705,9 @@
     "reference": "August 15, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "John met with his teammates after returning from Chicago on the 15th.",
     "error": null,
-    "latency_sec": 0.195
+    "latency_sec": 0.448
   },
   {
     "qa_id": "conv-43_q27",
@@ -715,9 +715,9 @@
     "reference": "Pomodoro technique",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Tim uses the 25-minute work, 5-minute break technique.",
+    "prediction": "Tim uses the technique of breaking up studying into smaller parts, with 25 minutes on and 5 minutes off.",
     "error": null,
-    "latency_sec": 0.368
+    "latency_sec": 0.53
   },
   {
     "qa_id": "conv-43_q30",
@@ -725,9 +725,9 @@
     "reference": "Seattle, Chicago, New York, and Paris.",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Paris, Italy, New York City, Barcelona",
+    "prediction": "New York City.",
     "error": null,
-    "latency_sec": 0.29
+    "latency_sec": 0.25
   },
   {
     "qa_id": "conv-43_q34",
@@ -735,9 +735,9 @@
     "reference": "become a basketball coach since he likes giving back and leadership",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "John could pursue coaching or writing about basketball after his career.",
+    "prediction": "John could think about getting endorsements and building his brand away from basketball.",
     "error": null,
-    "latency_sec": 0.387
+    "latency_sec": 0.479
   },
   {
     "qa_id": "conv-43_q36",
@@ -745,9 +745,9 @@
     "reference": "LeBron James",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "John's favorite basketball player is LeBron James.",
     "error": null,
-    "latency_sec": 0.241
+    "latency_sec": 0.435
   },
   {
     "qa_id": "conv-43_q37",
@@ -757,7 +757,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.24
+    "latency_sec": 0.321
   },
   {
     "qa_id": "conv-43_q40",
@@ -767,7 +767,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.227
+    "latency_sec": 0.261
   },
   {
     "qa_id": "conv-43_q49",
@@ -775,9 +775,9 @@
     "reference": "two times",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "John has injured his ankle once.",
     "error": null,
-    "latency_sec": 0.282
+    "latency_sec": 0.302
   },
   {
     "qa_id": "conv-43_q50",
@@ -785,9 +785,9 @@
     "reference": "The Alchemist",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "'Dune' by Frank Herbert.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.362
+    "latency_sec": 0.218
   },
   {
     "qa_id": "conv-43_q57",
@@ -795,9 +795,9 @@
     "reference": "piano, violin",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Tim plays the piano and violin.",
+    "prediction": "Tim plays the violin and the piano.",
     "error": null,
-    "latency_sec": 0.325
+    "latency_sec": 0.309
   },
   {
     "qa_id": "conv-43_q66",
@@ -807,7 +807,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.268
+    "latency_sec": 0.161
   },
   {
     "qa_id": "conv-43_q67",
@@ -815,9 +815,9 @@
     "reference": "Writing a travel blog.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Learning Spanish and German for travel.",
+    "prediction": "Reading travel stories and escaping to fantasy worlds.",
     "error": null,
-    "latency_sec": 0.362
+    "latency_sec": 0.33
   },
   {
     "qa_id": "conv-43_q70",
@@ -827,7 +827,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.308
+    "latency_sec": 0.295
   },
   {
     "qa_id": "conv-43_q74",
@@ -835,9 +835,9 @@
     "reference": "characters, spells, magical creatures",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Characters, spells, and magical creatures.",
     "error": null,
-    "latency_sec": 0.24
+    "latency_sec": 0.446
   },
   {
     "qa_id": "conv-43_q91",
@@ -845,9 +845,9 @@
     "reference": "Aug 15th",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "John met back up with his teammates on August 15, 2023.",
     "error": null,
-    "latency_sec": 0.443
+    "latency_sec": 0.51
   },
   {
     "qa_id": "conv-43_q108",
@@ -855,9 +855,9 @@
     "reference": "positively influence and inspire others, potentially start a foundation and engage in charity work",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "John wants to be known as a consistent performer and help his team, and also wants to think about life after basketball through endorsements and building his brand.",
     "error": null,
-    "latency_sec": 0.256
+    "latency_sec": 0.586
   },
   {
     "qa_id": "conv-43_q131",
@@ -865,9 +865,9 @@
     "reference": "a basketball signed by his favorite player",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "A picture of himself speaking at a charity event.",
     "error": null,
-    "latency_sec": 0.234
+    "latency_sec": 0.308
   },
   {
     "qa_id": "conv-43_q142",
@@ -875,9 +875,9 @@
     "reference": "made him think again about following dreams and searching for personal legends",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "\"The Alchemist\" motivated and gave John hope for his journey and well-being.",
+    "prediction": "\"The Alchemist\" helped John think about following dreams and searching for personal legends, making him feel motivated and hopeful. It also helped him to keep chasing his dreams and to trust the process.",
     "error": null,
-    "latency_sec": 0.387
+    "latency_sec": 0.785
   },
   {
     "qa_id": "conv-44_q19",
@@ -885,9 +885,9 @@
     "reference": "cook dog treats",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "An indoor activity that Andrew would enjoy doing while making his dog happy is playing at a doggy daycare.",
     "error": null,
-    "latency_sec": 0.245
+    "latency_sec": 0.479
   },
   {
     "qa_id": "conv-44_q20",
@@ -897,7 +897,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.194
+    "latency_sec": 0.24
   },
   {
     "qa_id": "conv-44_q33",
@@ -905,9 +905,9 @@
     "reference": "Change to a hybrid or remote job so he can move away from the city to the suburbs to have a larger living space and be closer to nature.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Andrew can find a dog-friendly place to live and incorporate stress-reducing activities for Buddy.",
+    "prediction": "Andrew can potentially find a pet-friendly place to live near a park or woods for his dogs.",
     "error": null,
-    "latency_sec": 0.388
+    "latency_sec": 0.51
   },
   {
     "qa_id": "conv-44_q38",
@@ -915,9 +915,9 @@
     "reference": "the weekend before October 24, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Last weekend.",
     "error": null,
-    "latency_sec": 0.197
+    "latency_sec": 0.315
   },
   {
     "qa_id": "conv-44_q39",
@@ -925,9 +925,9 @@
     "reference": "Companionship",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Audrey got love and companionship from having so many dogs.",
+    "prediction": "Audrey gets happy and busy with having so many dogs.",
     "error": null,
-    "latency_sec": 0.348
+    "latency_sec": 0.518
   },
   {
     "qa_id": "conv-44_q46",
@@ -937,7 +937,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.238
+    "latency_sec": 0.147
   },
   {
     "qa_id": "conv-44_q49",
@@ -945,9 +945,9 @@
     "reference": "Family",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Audrey views her pets as best friends.",
+    "prediction": "Audrey views her pets as family.",
     "error": null,
-    "latency_sec": 0.319
+    "latency_sec": 0.449
   },
   {
     "qa_id": "conv-44_q55",
@@ -955,9 +955,9 @@
     "reference": "few days before November 22, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "16 August, 2023",
     "error": null,
-    "latency_sec": 0.219
+    "latency_sec": 0.423
   },
   {
     "qa_id": "conv-44_q88",
@@ -965,9 +965,9 @@
     "reference": "Grooming slowly and gently, paying attention to sensitive areas like ears and paws. And remember to stay patient and positive throughout the grooming process.",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Audrey advised Andrew to introduce Toby to his other dogs gradually and keep them on a leash initially.",
     "error": null,
-    "latency_sec": 0.244
+    "latency_sec": 0.613
   },
   {
     "qa_id": "conv-44_q107",
@@ -975,9 +975,9 @@
     "reference": "Confused",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Audrey's dogs hate snow.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.363
+    "latency_sec": 0.337
   },
   {
     "qa_id": "conv-47_q11",
@@ -987,7 +987,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.181
+    "latency_sec": 0.114
   },
   {
     "qa_id": "conv-47_q17",
@@ -995,9 +995,9 @@
     "reference": "Mafia",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "The board game where you have to find the imposter is the one John mentions to James, which he's been playing with friends.",
     "error": null,
-    "latency_sec": 0.19
+    "latency_sec": 0.533
   },
   {
     "qa_id": "conv-47_q19",
@@ -1007,7 +1007,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.181
+    "latency_sec": 0.201
   },
   {
     "qa_id": "conv-47_q36",
@@ -1015,9 +1015,9 @@
     "reference": "Most likely John's partner.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "Luna.",
     "error": null,
-    "latency_sec": 0.182
+    "latency_sec": 0.181
   },
   {
     "qa_id": "conv-47_q39",
@@ -1027,7 +1027,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.187
+    "latency_sec": 0.202
   },
   {
     "qa_id": "conv-47_q40",
@@ -1035,9 +1035,9 @@
     "reference": "swimming, catching frisbees, balancing on a skateboard, sit, stay, paw, and rollover",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "James's pets know sit, stay, paw, and rollover.",
+    "prediction": "James's pets can do tricks like sit, stay, paw, and rollover.",
     "error": null,
-    "latency_sec": 0.331
+    "latency_sec": 0.415
   },
   {
     "qa_id": "conv-47_q87",
@@ -1045,9 +1045,9 @@
     "reference": "Hawaiian",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "James' favorite pizza is pepperoni. unknown",
+    "prediction": "Hawaiian pizza.",
     "error": null,
-    "latency_sec": 0.274
+    "latency_sec": 0.223
   },
   {
     "qa_id": "conv-47_q99",
@@ -1055,9 +1055,9 @@
     "reference": "providing necessary items to those who are less fortunate",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "The organization James volunteered with provides necessary items to those who are less fortunate.",
     "error": null,
-    "latency_sec": 0.192
+    "latency_sec": 0.372
   },
   {
     "qa_id": "conv-47_q106",
@@ -1065,9 +1065,9 @@
     "reference": "Chess",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "John started playing chess recently for improving strategy.",
+    "prediction": "It's an online board game.",
     "error": null,
-    "latency_sec": 0.284
+    "latency_sec": 0.211
   },
   {
     "qa_id": "conv-47_q130",
@@ -1077,7 +1077,7 @@
     "category_name": "open_domain",
     "prediction": "Guitar.",
     "error": null,
-    "latency_sec": 0.205
+    "latency_sec": 0.247
   },
   {
     "qa_id": "conv-47_q139",
@@ -1085,9 +1085,9 @@
     "reference": "Super Mario and The Legend of Zelda games",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Super Mario and The Legend of Zelda sparked James' passion for gaming when he was a kid.",
     "error": null,
-    "latency_sec": 0.182
+    "latency_sec": 0.55
   },
   {
     "qa_id": "conv-48_q0",
@@ -1097,7 +1097,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.325
+    "latency_sec": 0.118
   },
   {
     "qa_id": "conv-48_q3",
@@ -1105,9 +1105,9 @@
     "reference": "in 2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Last year, in January 2023.",
     "error": null,
-    "latency_sec": 0.313
+    "latency_sec": 0.253
   },
   {
     "qa_id": "conv-48_q13",
@@ -1115,9 +1115,9 @@
     "reference": "sitting in a spot by the window in her Mom's house, sitting by the beach, Bali, forest trail in a nearby park",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Deborah finds peace in a spot by the water near her mother's old house and a place that is both soothing and nostalgic.",
     "error": null,
-    "latency_sec": 0.29
+    "latency_sec": 0.51
   },
   {
     "qa_id": "conv-48_q18",
@@ -1127,7 +1127,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.301
+    "latency_sec": 0.169
   },
   {
     "qa_id": "conv-48_q19",
@@ -1137,7 +1137,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.298
+    "latency_sec": 0.132
   },
   {
     "qa_id": "conv-48_q28",
@@ -1147,7 +1147,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.262
+    "latency_sec": 0.114
   },
   {
     "qa_id": "conv-48_q31",
@@ -1155,9 +1155,9 @@
     "reference": "in summer 2022",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Last photo of Deborah and Karlie was taken last summer when they hiked, which was last year.",
     "error": null,
-    "latency_sec": 0.283
+    "latency_sec": 0.412
   },
   {
     "qa_id": "conv-48_q43",
@@ -1165,9 +1165,9 @@
     "reference": "first week of April, 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On April 9, 2023, Deborah went for a bicycle ride with a neighbor.",
     "error": null,
-    "latency_sec": 0.572
+    "latency_sec": 0.47
   },
   {
     "qa_id": "conv-48_q48",
@@ -1177,7 +1177,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.32
+    "latency_sec": 0.229
   },
   {
     "qa_id": "conv-48_q73",
@@ -1185,9 +1185,9 @@
     "reference": "yes",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Yes, Jolene taught herself how to play the console.",
     "error": null,
-    "latency_sec": 0.281
+    "latency_sec": 0.339
   },
   {
     "qa_id": "conv-48_q79",
@@ -1197,7 +1197,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.328
+    "latency_sec": 0.181
   },
   {
     "qa_id": "conv-48_q80",
@@ -1205,9 +1205,9 @@
     "reference": "no",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Jolene has been gathering information and getting a beginners' guide to surfing, indicating she has tried surfing but not necessarily as a beginner.",
     "error": null,
-    "latency_sec": 0.29
+    "latency_sec": 0.455
   },
   {
     "qa_id": "conv-48_q123",
@@ -1215,9 +1215,9 @@
     "reference": "They realized they inspire each other",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Jolene and Anna discussed how yoga has improved their lives and the sense of community it gives.",
+    "prediction": "They were talking about each other and realized that they inspire each other.",
     "error": null,
-    "latency_sec": 0.551
+    "latency_sec": 0.453
   },
   {
     "qa_id": "conv-48_q133",
@@ -1225,9 +1225,9 @@
     "reference": "interning at a well-known engineering firm",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Jolene is busy with an internship.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.552
+    "latency_sec": 0.113
   },
   {
     "qa_id": "conv-48_q150",
@@ -1235,9 +1235,9 @@
     "reference": "Zelda BOTW",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Zelda BOTW",
     "error": null,
-    "latency_sec": 0.405
+    "latency_sec": 0.187
   },
   {
     "qa_id": "conv-48_q164",
@@ -1245,9 +1245,9 @@
     "reference": "8 years old",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "unknown",
+    "prediction": "Max is 8 years old.",
     "error": null,
-    "latency_sec": 0.279
+    "latency_sec": 0.19
   },
   {
     "qa_id": "conv-48_q166",
@@ -1257,7 +1257,7 @@
     "category_name": "open_domain",
     "prediction": "A tranquil spot.",
     "error": null,
-    "latency_sec": 0.399
+    "latency_sec": 0.332
   },
   {
     "qa_id": "conv-49_q3",
@@ -1265,9 +1265,9 @@
     "reference": "two",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Evan has owned 2 Prius.",
     "error": null,
-    "latency_sec": 0.172
+    "latency_sec": 0.288
   },
   {
     "qa_id": "conv-49_q5",
@@ -1277,7 +1277,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.182
+    "latency_sec": 0.115
   },
   {
     "qa_id": "conv-49_q8",
@@ -1285,9 +1285,9 @@
     "reference": "Watercolor painting",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Painting.",
     "error": null,
-    "latency_sec": 0.184
+    "latency_sec": 0.229
   },
   {
     "qa_id": "conv-49_q10",
@@ -1295,9 +1295,9 @@
     "reference": "camping trip in the outdoors",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "camping trip in the outdoors",
     "error": null,
-    "latency_sec": 0.196
+    "latency_sec": 0.238
   },
   {
     "qa_id": "conv-49_q12",
@@ -1305,9 +1305,9 @@
     "reference": "A few days before May 24, 2023.",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "On May 24, 2023, Sam went to the doctor and found out he had a weight problem.",
     "error": null,
-    "latency_sec": 0.174
+    "latency_sec": 0.547
   },
   {
     "qa_id": "conv-49_q20",
@@ -1315,9 +1315,9 @@
     "reference": "a cookbook with healthy recipes or a subscription to a healthy meal delivery service.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "An adjustable dumbbell and a cookbook focusing on healthy recipes would be appropriate gifts.",
     "error": null,
-    "latency_sec": 0.188
+    "latency_sec": 0.501
   },
   {
     "qa_id": "conv-49_q27",
@@ -1327,7 +1327,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.218
+    "latency_sec": 0.293
   },
   {
     "qa_id": "conv-49_q38",
@@ -1335,9 +1335,9 @@
     "reference": "Nature and outdoor activities seem to be significant stress relievers and sources of joy for both Evan and Sam. These activities likely contribute positively to their mental well-being.",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "Nature and the outdoors are important for Sam, who is trying to stay positive despite health issues, and they plan to visit a peaceful place to watch sunsets together. Evan reminds Sam to find joy in the little things, especially when times are tough.",
+    "prediction": "Nature and the outdoors are calming and help reset both Sam's and Evan's minds and bodies.",
     "error": null,
-    "latency_sec": 0.695
+    "latency_sec": 0.473
   },
   {
     "qa_id": "conv-49_q42",
@@ -1345,9 +1345,9 @@
     "reference": "His friend got him into it by gifting him a painting and giving him some advice. The painting inspired Evan.",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "unknown",
+    "prediction": "Evan got into painting after a friend inspired him with a painting and he joined classes to find like-minded people and improve his skills.",
     "error": null,
-    "latency_sec": 0.191
+    "latency_sec": 0.485
   },
   {
     "qa_id": "conv-49_q54",
@@ -1355,9 +1355,9 @@
     "reference": "heart palpitations, twisted ankle, twisted ankle",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Job loss, health scare, health issues, and health struggles.",
+    "prediction": "Evan faces a health scare due to a sudden heart palpitation and a soccer accident that hurt his son's ankle.",
     "error": null,
-    "latency_sec": 0.32
+    "latency_sec": 0.536
   },
   {
     "qa_id": "conv-49_q57",
@@ -1367,7 +1367,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.178
+    "latency_sec": 0.121
   },
   {
     "qa_id": "conv-49_q65",
@@ -1375,9 +1375,9 @@
     "reference": "beach",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "Evan lives close to a beach and mountains.",
     "error": null,
-    "latency_sec": 0.18
+    "latency_sec": 0.301
   },
   {
     "qa_id": "conv-49_q66",
@@ -1385,9 +1385,9 @@
     "reference": "end of October 2023",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "9:13 pm on 9 November, 2023",
+    "prediction": "[9:13 pm on 9 November, 2023]",
     "error": null,
-    "latency_sec": 0.338
+    "latency_sec": 0.328
   },
   {
     "qa_id": "conv-49_q79",
@@ -1397,7 +1397,7 @@
     "category_name": "temporal",
     "prediction": "Next month.",
     "error": null,
-    "latency_sec": 0.236
+    "latency_sec": 0.263
   },
   {
     "qa_id": "conv-49_q138",
@@ -1405,9 +1405,9 @@
     "reference": "running in the mornings",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Sam enjoys running in the mornings to clear their head.",
+    "prediction": "Sam recently started running in the mornings to clear his head.",
     "error": null,
-    "latency_sec": 0.292
+    "latency_sec": 0.274
   },
   {
     "qa_id": "conv-49_q141",
@@ -1415,9 +1415,9 @@
     "reference": "Keep trying new things",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Evan encourages Sam to believe in herself and take it one day at a time.",
+    "prediction": "Evan suggested Sam should keep trying new things to find her own version of love.",
     "error": null,
-    "latency_sec": 0.38
+    "latency_sec": 0.435
   },
   {
     "qa_id": "conv-50_q5",
@@ -1427,7 +1427,7 @@
     "category_name": "single_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.163
+    "latency_sec": 0.129
   },
   {
     "qa_id": "conv-50_q7",
@@ -1437,7 +1437,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.172
+    "latency_sec": 0.204
   },
   {
     "qa_id": "conv-50_q15",
@@ -1445,9 +1445,9 @@
     "reference": "because it relaxes and calms him",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Dave regularly visits parks to take photos and share his passion.",
+    "prediction": "Dave regularly visits parks for relaxation.",
     "error": null,
-    "latency_sec": 0.3
+    "latency_sec": 0.299
   },
   {
     "qa_id": "conv-50_q21",
@@ -1457,7 +1457,7 @@
     "category_name": "multi_hop",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.179
+    "latency_sec": 0.176
   },
   {
     "qa_id": "conv-50_q23",
@@ -1465,9 +1465,9 @@
     "reference": "auto engineering",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Dave's main passion is fixing up things and sharing his passion with others.",
+    "prediction": "Dave's main passion is car restoration and modification.",
     "error": null,
-    "latency_sec": 0.316
+    "latency_sec": 0.392
   },
   {
     "qa_id": "conv-50_q31",
@@ -1475,9 +1475,9 @@
     "reference": "San Francisco",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "unknown",
+    "prediction": "Dave was not mentioned in the last two weeks of August 2023.",
     "error": null,
-    "latency_sec": 0.184
+    "latency_sec": 0.297
   },
   {
     "qa_id": "conv-50_q34",
@@ -1487,7 +1487,7 @@
     "category_name": "temporal",
     "prediction": "9:19 am on 2 September, 2023",
     "error": null,
-    "latency_sec": 0.35
+    "latency_sec": 0.446
   },
   {
     "qa_id": "conv-50_q37",
@@ -1495,9 +1495,9 @@
     "reference": "yes",
     "category": 3,
     "category_name": "multi_hop",
-    "prediction": "unknown",
+    "prediction": "Yes, Calvin loves music tours.",
     "error": null,
-    "latency_sec": 0.192
+    "latency_sec": 0.3
   },
   {
     "qa_id": "conv-50_q46",
@@ -1505,9 +1505,9 @@
     "reference": "Restoring cars",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "Dave enjoys working on cars as a hobby.",
+    "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.285
+    "latency_sec": 0.154
   },
   {
     "qa_id": "conv-50_q48",
@@ -1515,9 +1515,9 @@
     "reference": "attending a car show",
     "category": 2,
     "category_name": "temporal",
-    "prediction": "Dave attended a rock concert in Boston.",
+    "prediction": "Dave was attending a festival where Fireworks headlined.",
     "error": null,
-    "latency_sec": 0.268
+    "latency_sec": 0.228
   },
   {
     "qa_id": "conv-50_q50",
@@ -1527,7 +1527,7 @@
     "category_name": "temporal",
     "prediction": "unknown",
     "error": null,
-    "latency_sec": 0.196
+    "latency_sec": 0.214
   },
   {
     "qa_id": "conv-50_q54",
@@ -1535,9 +1535,9 @@
     "reference": "Calvin stays connected to the creative process by always staying up-to-date on world events and watching documentaries about artists.",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "studio notebook",
+    "prediction": "A notebook helps Calvin stay connected to the creative process.",
     "error": null,
-    "latency_sec": 0.232
+    "latency_sec": 0.33
   },
   {
     "qa_id": "conv-50_q56",
@@ -1545,9 +1545,9 @@
     "reference": "San Francsico, Detroit",
     "category": 1,
     "category_name": "single_hop",
-    "prediction": "San Francisco, Detroit, Boston",
+    "prediction": "San Francisco, a mountainous region.",
     "error": null,
-    "latency_sec": 0.26
+    "latency_sec": 0.253
   },
   {
     "qa_id": "conv-50_q85",
@@ -1555,9 +1555,9 @@
     "reference": "exploring parks",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Dave explores parks on weekends to relax and enjoy nature.",
+    "prediction": "Dave is exploring some parks on the weekends to relax.",
     "error": null,
-    "latency_sec": 0.304
+    "latency_sec": 0.271
   },
   {
     "qa_id": "conv-50_q97",
@@ -1565,9 +1565,9 @@
     "reference": "attention to small details",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Dave finds satisfaction in transforming old cars into beautiful ones.",
+    "prediction": "Dave mentions that creating a modern twist on a classic car is the exciting part, implying that making his custom cars unique lies in the fusion of modern elements with classic designs.",
     "error": null,
-    "latency_sec": 0.321
+    "latency_sec": 0.633
   },
   {
     "qa_id": "conv-50_q104",
@@ -1575,9 +1575,9 @@
     "reference": "unique look",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Calvin's new album video will have a custom guitar with a shiny finish.",
+    "prediction": "To customize it with a unique look and personal touch.",
     "error": null,
-    "latency_sec": 0.429
+    "latency_sec": 0.319
   },
   {
     "qa_id": "conv-50_q114",
@@ -1587,7 +1587,7 @@
     "category_name": "open_domain",
     "prediction": "California Love",
     "error": null,
-    "latency_sec": 0.219
+    "latency_sec": 0.278
   },
   {
     "qa_id": "conv-50_q143",
@@ -1595,8 +1595,8 @@
     "reference": "Car mods",
     "category": 4,
     "category_name": "open_domain",
-    "prediction": "Dave recently started a blog about car mods.",
+    "prediction": "Dave recently started a car mods blog.",
     "error": null,
-    "latency_sec": 0.272
+    "latency_sec": 0.234
   }
 ]
