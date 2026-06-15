@@ -29,12 +29,11 @@ class MemoryRetriever:
         return self.store.search(q_emb, k=self.top_k)
 
     def format_context(self, memories: list[dict]) -> str:
-        """Format retrieved items — raw dialogue first, summaries as notes.
+        """Format retrieved items — summaries first (temporal anchors),
+        then raw dialogue turns grouped by session (exact evidence).
 
-        v3 key change: raw turns are the primary evidence (shown first),
-        summaries provide temporal/topical context (shown after).
-        This ensures the generation model anchors on exact dialogue
-        wording before seeing the compressed summary view.
+        Summaries provide resolved dates and topic context that help the
+        model interpret raw turns. Raw turns provide the exact wording.
         """
         if not memories:
             return "No relevant information found."
@@ -46,9 +45,17 @@ class MemoryRetriever:
 
         lines = []
 
-        # --- Raw dialogue turns first: primary evidence ---
+        # --- Summaries first: temporal/topical anchors ---
+        if summaries:
+            lines.append("=== Session Summaries ===")
+            for m in summaries:
+                sid = m["metadata"].get("session_id", "?")
+                date = m["metadata"].get("date_time", "")
+                text = m.get("text", "")
+                lines.append(f"[Session {sid} @ {date}] {text}")
+
+        # --- Raw dialogue turns: exact evidence, grouped by session ---
         if turns:
-            # Group by session for readability
             groups: dict[int, list[dict]] = {}
             session_order: list[int] = []
             for m in turns:
@@ -58,21 +65,12 @@ class MemoryRetriever:
                     session_order.append(sid)
                 groups[sid].append(m)
 
-            lines.append("=== Relevant Dialogue ===")
+            lines.append("\n=== Relevant Dialogue ===")
             for sid in session_order:
                 grp = groups[sid]
                 date = grp[0]["metadata"].get("date_time", "unknown")
                 lines.append(f"--- Session {sid} ({date}) ---")
                 for m in grp:
                     lines.append(m.get("text", ""))
-
-        # --- Summaries second: context anchors ---
-        if summaries:
-            lines.append("\n=== Session Context ===")
-            for m in summaries:
-                sid = m["metadata"].get("session_id", "?")
-                date = m["metadata"].get("date_time", "")
-                text = m.get("text", "")
-                lines.append(f"[Session {sid} @ {date}] {text}")
 
         return "\n".join(lines) if lines else "No relevant information found."
