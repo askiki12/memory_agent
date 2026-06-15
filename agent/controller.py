@@ -43,9 +43,7 @@ ANSWER_SYSTEM = (
     "Below are relevant excerpts from that conversation. "
     "Use only the provided dialogue to answer. "
     "Keep the answer short (a phrase or one sentence). "
-    "If the dialogue does not contain the answer, reply 'unknown'. "
-    "Be precise — if a number, date, or name is mentioned, use the exact value "
-    "from the dialogue. Do not guess or infer beyond what is stated."
+    "If the dialogue does not contain the answer, reply 'unknown'."
 )
 
 ANSWER_PROMPT = """{context}

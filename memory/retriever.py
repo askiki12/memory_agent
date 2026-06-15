@@ -29,8 +29,12 @@ class MemoryRetriever:
         self.top_k = top_k
         self.summary_k = summary_k
 
-    def retrieve(self, query: str) -> dict:
-        """Parallel retrieval from both stores.
+    def retrieve(self, query: str, max_per_session: int = 5) -> dict:
+        """Parallel retrieval from both stores with session diversity.
+
+        To support multi-hop questions, we limit the number of turns from
+        any single session, ensuring the context spans 2+ sessions when
+        the query touches on multiple topics.
 
         Returns dict with summaries list and turns list.
         """
@@ -46,7 +50,23 @@ class MemoryRetriever:
             )
 
         if len(self.turn_store) > 0:
-            result["turns"] = self.turn_store.search(q_emb, k=self.top_k)
+            # Fetch more candidates than needed to allow diversity filtering
+            fetch_k = max(self.top_k * 3, 20)
+            candidates = self.turn_store.search(q_emb, k=fetch_k)
+
+            # Apply session diversity: at most max_per_session turns per session
+            seen_per_session: dict[int, int] = {}
+            diverse_turns = []
+            for c in candidates:
+                sid = c["metadata"].get("session_id", -1)
+                count = seen_per_session.get(sid, 0)
+                if count < max_per_session:
+                    diverse_turns.append(c)
+                    seen_per_session[sid] = count + 1
+                if len(diverse_turns) >= self.top_k:
+                    break
+
+            result["turns"] = diverse_turns
 
         return result
 
@@ -110,13 +130,12 @@ class MemoryRetriever:
             # Session header with date
             lines.append(f"--- Session {sid} ({date}) ---")
 
-            # Summary first (temporal/topical anchor)
+            # Summary as natural first line after header (no artificial labels)
             if sid in summary_by_session:
-                lines.append(f"[Context] {summary_by_session[sid]}")
+                lines.append(summary_by_session[sid])
 
-            # Raw turns (exact evidence)
+            # Raw dialogue turns
             if turns_in_session:
-                lines.append("[Dialogue]")
                 for t in turns_in_session:
                     lines.append(t.get("text", ""))
 
