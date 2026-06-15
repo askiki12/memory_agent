@@ -4,7 +4,16 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+# CRITICAL: Prevent PyTorch from touching GPU — avoids CUDA driver version
+# mismatch crashes that kill the co-located vLLM Docker container.
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
+
 import numpy as np
+import torch
+# Limit CPU threads to reduce memory pressure on WSL2 (7.6GB system RAM shared
+# with Docker vLLM engine). 32 cores × full threading = high peak memory.
+torch.set_num_threads(4)
+
 from sentence_transformers import SentenceTransformer
 
 from eval_kit.llm_client import LLMClient
@@ -42,12 +51,13 @@ class MyMemoryAgent:
         self.llm = LLMClient()
 
         # Embedding model: use local model dir; fall back to HuggingFace name
+        # Force CPU to avoid GPU memory conflict with vLLM server
         embed_path = os.getenv("EMBED_MODEL_PATH", "")
-        embed_model_name = os.getenv("EMBED_MODEL", "BAAI/bge-small-zh-v1.5")
+        embed_model_name = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
         if embed_path and Path(embed_path).exists():
-            self.embed_model = SentenceTransformer(embed_path)
+            self.embed_model = SentenceTransformer(embed_path, device="cpu")
         else:
-            self.embed_model = SentenceTransformer(embed_model_name)
+            self.embed_model = SentenceTransformer(embed_model_name, device="cpu")
 
         self.top_k = top_k
         self.store = MemoryStore(dim=512)

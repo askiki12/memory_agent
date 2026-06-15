@@ -69,7 +69,7 @@ class LLMClient:
 
     def embed(self, texts, model: Optional[str] = None) -> list:
         """可选：embedding 辅助方法。仅在后端支持 embeddings 接口时可用。"""
-        model = "../models/bge-small-zh-v1.5" if model is None else model
+        model = "../models/bge-small-en-v1.5" if model is None else model
         if isinstance(texts, str):
             texts = [texts]
         resp = self.client.embeddings.create(model=model, input=texts)

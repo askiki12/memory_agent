@@ -19,6 +19,16 @@ Vanilla RAG 基线：
 
 import os
 import numpy as np
+
+# CRITICAL: Prevent PyTorch from touching GPU — avoids CUDA driver version
+# mismatch crashes that kill the co-located vLLM Docker container.
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
+
+# Limit CPU threads to reduce memory pressure on WSL2 (7.6GB system RAM shared
+# with Docker vLLM engine).
+import torch
+torch.set_num_threads(4)
+
 from llm_client import LLMClient
 
 
@@ -29,7 +39,7 @@ class VanillaRAGAgent:
         # embedding 用 sentence-transformers 本地加载，不占 GPU 显存（跑在 CPU 上），
         # 避免 8G 卡同时跑 vLLM + embedding 服务导致 OOM
         from sentence_transformers import SentenceTransformer
-        embed_model = os.getenv("EMBED_MODEL", "../models/bge-small-zh-v1.5")
+        embed_model = os.getenv("EMBED_MODEL", "../models/bge-small-en-v1.5")
         self.embed_model = SentenceTransformer(embed_model, device="cpu")
         self.top_k = top_k
         self.chunks: list[str] = []

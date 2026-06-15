@@ -172,7 +172,7 @@ def main() -> None:
 	ensure_eval_set()
 	ensure_predictions_for_baselines()
 	ensure_results_for_baselines()
-	rerun_my_agent()
+	# rerun_my_agent()
 
 	print("\n[Done] Evaluation workflow completed.")
 	print(f"Predictions dir: {PREDICTIONS_DIR}")

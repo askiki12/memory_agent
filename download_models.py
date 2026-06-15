@@ -19,9 +19,9 @@ MODELS = [
         "local_dir": "Qwen2.5-3B-Instruct-AWQ",
     },
     {
-        "hf_repo": "BAAI/bge-small-zh-v1.5",
-        "ms_repo": "AI-ModelScope/bge-small-zh-v1.5",
-        "local_dir": "bge-small-zh-v1.5",
+        "hf_repo": "BAAI/bge-small-en-v1.5",
+        "ms_repo": "AI-ModelScope/bge-small-en-v1.5",
+        "local_dir": "bge-small-en-v1.5",
     },
 ]
 
