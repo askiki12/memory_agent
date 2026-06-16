@@ -22,9 +22,9 @@ class MemoryRetriever:
         embed_model,
         store,
         top_k: int = 10,
-        importance_weight: float = 0.0,    # reserved for future use
-        recency_weight: float = 0.0,        # reserved for future use
-        importance_filter: float = 0.0,     # reserved for future use
+        importance_weight: float = 0.0,
+        recency_weight: float = 0.0,
+        importance_filter: float = 0.25,
         fetch_multiplier: int = 3,
     ):
         self.embed_model = embed_model
@@ -36,11 +36,11 @@ class MemoryRetriever:
         self.fetch_multiplier = fetch_multiplier
 
     def retrieve(self, query: str) -> list[dict]:
-        """Pure relevance retrieval (V3-compatible).
+        """Relevance retrieval with optional importance noise filter.
 
-        Importance and recency metadata are collected at ingest time
-        and available for future phases. Current retrieval uses only
-        cosine similarity — proven optimal for this setup.
+        If importance_filter > 0: removes low-importance candidates
+        (small talk, fillers) before taking top_k. Relevance order
+        is preserved — no re-ranking.
         """
         if len(self.store) == 0:
             return []
@@ -48,7 +48,22 @@ class MemoryRetriever:
         q_emb = self.embed_model.encode(
             [query], normalize_embeddings=True, show_progress_bar=False
         )
-        return self.store.search(q_emb, k=self.top_k)
+
+        if self.importance_filter <= 0:
+            return self.store.search(q_emb, k=self.top_k)
+
+        # Fetch extra to compensate for filtered-out items
+        fetch_k = min(self.top_k * self.fetch_multiplier, self.store.total_count)
+        candidates = self.store.search(q_emb, k=fetch_k)
+
+        # Filter out noise, keep relevance order
+        filtered = [c for c in candidates
+                    if c["metadata"].get("importance", 0.0) >= self.importance_filter]
+
+        if len(filtered) < self.top_k:
+            filtered = candidates
+
+        return filtered[:self.top_k]
 
     def format_context(self, memories: list[dict]) -> str:
         """Format retrieved items — summaries first (temporal anchors),

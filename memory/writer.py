@@ -13,23 +13,31 @@ essence of each session in dense form, making semantic search more effective.
 No JSON parsing. No structured categories. Just natural language.
 """
 
-EXTRACTION_SYSTEM = """You are a note-taker. Read a conversation and write down the key facts in 3-5 sentences. Focus on:
-- Who did what, when, and where
-- Preferences, opinions, and plans mentioned
-- Important personal information shared
-- Events and experiences discussed
+EXTRACTION_SYSTEM = """You are a fact extractor. Read a conversation and list the key facts as standalone sentences. Each sentence must be self-contained and understandable without context.
 
-Write in natural English. Be specific — include names, dates, places.
-Do NOT include greetings, small talk, or filler."""
+Focus on extracting:
+- DATES: Every date mentioned, always in absolute format (e.g., "July 10, 2023", not "yesterday")
+- NAMES: People, places, organizations, events mentioned
+- NUMBERS: Quantities, counts, statistics
+- PREFERENCES: Likes, dislikes, hobbies, opinions, plans
+- EVENTS: What happened, who was involved, when and where
+- CHANGES: Decisions, life changes, new developments
 
-EXTRACTION_PROMPT = """Summarize the key facts from this conversation.
+Rules:
+- Write each fact as ONE sentence that stands alone
+- Always include the date if it was mentioned
+- Use the speakers' names (not "he" or "she" unless the referent is clear in the same sentence)
+- Do NOT include greetings, small talk, or filler
+- Do NOT write narrative summaries — list facts"""
 
-Date: {date_time}
+EXTRACTION_PROMPT = """Extract key facts from this conversation as standalone sentences.
+
+Session date: {date_time}
 Speakers: {speaker_a} and {speaker_b}
 
 {dialogue}
 
-Key facts (3-5 sentences):"""
+Key facts (one per line, each self-contained):"""
 
 
 class MemoryWriter:
