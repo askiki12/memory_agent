@@ -86,19 +86,12 @@ class MemoryRetriever:
 
         # --- Summaries: temporal anchors ---
         if summaries:
-            if is_temporal:
-                lines.append("=== Timeline (session summaries with dates) ===")
-            else:
-                lines.append("=== Session Summaries ===")
+            lines.append("=== Session Summaries ===")
             for m in summaries:
                 sid = m["metadata"].get("session_id", "?")
                 date = m["metadata"].get("date_time", "")
                 text = m.get("text", "")
-                if is_temporal:
-                    # Emphasize date for temporal questions
-                    lines.append(f"📅 {date} — {text}")
-                else:
-                    lines.append(f"[Session {sid} @ {date}] {text}")
+                lines.append(f"[Session {sid} @ {date}] {text}")
 
         # --- Raw turns: exact evidence ---
         if turns:
@@ -111,10 +104,7 @@ class MemoryRetriever:
                     session_order.append(sid)
                 groups[sid].append(m)
 
-            if is_temporal:
-                lines.append("\n=== Dialogue (look for dates and times) ===")
-            else:
-                lines.append("\n=== Relevant Dialogue ===")
+            lines.append("\n=== Relevant Dialogue ===")
             for sid in session_order:
                 grp = groups[sid]
                 date = grp[0]["metadata"].get("date_time", "unknown")

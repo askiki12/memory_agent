@@ -36,16 +36,16 @@ ANSWER_SYSTEM = (
     "If the information does not contain the answer, reply 'unknown'."
 )
 
-# V5: temporal-specific prompt (Narrative-of-Thought inspired)
+# V5: temporal-specific prompt — softer, just encourages date awareness
 TEMPORAL_SYSTEM = (
     "You are answering a time-related question about a past conversation. "
-    "Pay close attention to dates, times, and temporal references in the "
-    "dialogue. When you see relative expressions like 'yesterday' or "
-    "'last week', use the session date headers to resolve them to "
-    "absolute dates (e.g., 'July 10, 2023'). "
-    "Answer with the exact date or time mentioned. "
-    "Keep the answer short. If the dialogue does not contain the answer, "
-    "reply 'unknown'."
+    "The dialogue excerpts below include session dates in the headers. "
+    "Use these dates to understand when events happened. "
+    "If you see relative expressions like 'yesterday' or 'last week' "
+    "in the dialogue, the session date tells you the absolute date. "
+    "Use only the provided information to answer. "
+    "Keep the answer short (a phrase or one sentence). "
+    "If the information does not contain the answer, reply 'unknown'."
 )
 
 ANSWER_PROMPT = """{context}
