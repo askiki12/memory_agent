@@ -65,9 +65,12 @@ class MemoryRetriever:
 
         return filtered[:self.top_k]
 
-    def format_context(self, memories: list[dict]) -> str:
-        """Format retrieved items — summaries first (temporal anchors),
-        then raw dialogue turns grouped by session (exact evidence)."""
+    def format_context(self, memories: list[dict], question: str = "") -> str:
+        """Format retrieved items — summaries first, turns grouped by session.
+
+        V5: for temporal ('when') questions, uses timeline-style headers
+        to make dates more prominent for the model.
+        """
         if not memories:
             return "No relevant information found."
 
@@ -76,16 +79,28 @@ class MemoryRetriever:
         turns = [m for m in memories
                  if m["metadata"].get("category") == "raw_turn"]
 
+        # V5: detect temporal questions
+        is_temporal = question.strip().lower().startswith("when ")
+
         lines = []
 
+        # --- Summaries: temporal anchors ---
         if summaries:
-            lines.append("=== Session Summaries ===")
+            if is_temporal:
+                lines.append("=== Timeline (session summaries with dates) ===")
+            else:
+                lines.append("=== Session Summaries ===")
             for m in summaries:
                 sid = m["metadata"].get("session_id", "?")
                 date = m["metadata"].get("date_time", "")
                 text = m.get("text", "")
-                lines.append(f"[Session {sid} @ {date}] {text}")
+                if is_temporal:
+                    # Emphasize date for temporal questions
+                    lines.append(f"📅 {date} — {text}")
+                else:
+                    lines.append(f"[Session {sid} @ {date}] {text}")
 
+        # --- Raw turns: exact evidence ---
         if turns:
             groups: dict[int, list[dict]] = {}
             session_order: list[int] = []
@@ -96,7 +111,10 @@ class MemoryRetriever:
                     session_order.append(sid)
                 groups[sid].append(m)
 
-            lines.append("\n=== Relevant Dialogue ===")
+            if is_temporal:
+                lines.append("\n=== Dialogue (look for dates and times) ===")
+            else:
+                lines.append("\n=== Relevant Dialogue ===")
             for sid in session_order:
                 grp = groups[sid]
                 date = grp[0]["metadata"].get("date_time", "unknown")

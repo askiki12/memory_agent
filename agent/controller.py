@@ -36,6 +36,18 @@ ANSWER_SYSTEM = (
     "If the information does not contain the answer, reply 'unknown'."
 )
 
+# V5: temporal-specific prompt (Narrative-of-Thought inspired)
+TEMPORAL_SYSTEM = (
+    "You are answering a time-related question about a past conversation. "
+    "Pay close attention to dates, times, and temporal references in the "
+    "dialogue. When you see relative expressions like 'yesterday' or "
+    "'last week', use the session date headers to resolve them to "
+    "absolute dates (e.g., 'July 10, 2023'). "
+    "Answer with the exact date or time mentioned. "
+    "Keep the answer short. If the dialogue does not contain the answer, "
+    "reply 'unknown'."
+)
+
 ANSWER_PROMPT = """{context}
 
 === Question ===
@@ -347,16 +359,28 @@ class MyMemoryAgent:
     # Answer
     # ------------------------------------------------------------------
 
+    @staticmethod
+    def _is_temporal(question: str) -> bool:
+        """Detect temporal questions (V5)."""
+        q = question.strip().lower()
+        return q.startswith("when ") or q.startswith("when did")
+
     def answer(self, question: str) -> str:
-        """Retrieve relevant items, format with evidence first, generate."""
+        """Retrieve relevant items, format with evidence first, generate.
+
+        V5: uses temporal-specific system prompt for 'when' questions.
+        """
         memories = self.retriever.retrieve(question)
-        context = self.retriever.format_context(memories)
+        context = self.retriever.format_context(memories, question)
 
         prompt = ANSWER_PROMPT.format(context=context, question=question)
 
+        # V5: adaptive system prompt based on question type
+        system = TEMPORAL_SYSTEM if self._is_temporal(question) else ANSWER_SYSTEM
+
         try:
             answer = self.llm.generate(
-                prompt, max_tokens=64, temperature=0.0, system=ANSWER_SYSTEM
+                prompt, max_tokens=64, temperature=0.0, system=system
             )
         except Exception as e:
             answer = f"error: {e}"
