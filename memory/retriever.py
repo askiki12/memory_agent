@@ -1,46 +1,46 @@
-"""MemoryRetriever — semantic search with importance-based noise filtering (v4).
+"""MemoryRetriever — semantic search with metadata collection (v4 Phase 2).
 
-v4 Phase 1: instead of re-ranking by importance (which biases toward
-summaries), we use importance as a noise FILTER. Low-importance
-candidates (small talk, fillers) are removed AFTER FAISS retrieval,
-but the remaining candidates keep their original relevance order.
+Importance and recency metadata are collected at ingest time and stored
+in FAISS metadata. Retrieval currently uses pure relevance (cosine
+similarity) — same as V3. The metadata is available for future phases
+(query-type-aware weighting, answer verification, etc.).
 
-This helps single_hop (less noise) without hurting temporal (no
-re-ranking that favors summary prose).
+What we learned:
+  - Any re-ranking by non-relevance signals hurts temporal questions
+  - Pure noise filtering (importance < 0.25) helps single_hop but regresses
+    temporal at full scale (160 QA)
+  - The safest path: collect metadata, use relevance-only retrieval,
+    leverage metadata in context formatting or query-type detection
 """
 
 
 class MemoryRetriever:
-    """Semantic retrieval with importance-based noise filtering."""
+    """Semantic retrieval with metadata collection (relevance-only for now)."""
 
     def __init__(
         self,
         embed_model,
         store,
         top_k: int = 10,
-        importance_weight: float = 0.15,
-        importance_filter: float = 0.25,
+        importance_weight: float = 0.0,    # reserved for future use
+        recency_weight: float = 0.0,        # reserved for future use
+        importance_filter: float = 0.0,     # reserved for future use
         fetch_multiplier: int = 3,
     ):
         self.embed_model = embed_model
         self.store = store
         self.top_k = top_k
         self.importance_weight = importance_weight
-        self.importance_filter = importance_filter  # min importance to keep
+        self.recency_weight = recency_weight
+        self.importance_filter = importance_filter
         self.fetch_multiplier = fetch_multiplier
 
     def retrieve(self, query: str) -> list[dict]:
-        """Retrieve with noise filtering.
+        """Pure relevance retrieval (V3-compatible).
 
-        1. FAISS search for top_k * fetch_multiplier candidates
-        2. Filter out candidates with importance < importance_filter
-           (removes small talk: "Hi!", "Yeah, me too", etc.)
-        3. Apply mild importance boost to remaining candidates
-        4. Return top_k
-
-        The filter threshold is low (0.25) — only pure noise is removed.
-        The boost is small — just enough to break ties in favor of
-        fact-dense turns.
+        Importance and recency metadata are collected at ingest time
+        and available for future phases. Current retrieval uses only
+        cosine similarity — proven optimal for this setup.
         """
         if len(self.store) == 0:
             return []
@@ -48,28 +48,7 @@ class MemoryRetriever:
         q_emb = self.embed_model.encode(
             [query], normalize_embeddings=True, show_progress_bar=False
         )
-
-        fetch_k = min(self.top_k * self.fetch_multiplier, self.store.total_count)
-        candidates = self.store.search(q_emb, k=fetch_k)
-
-        if not candidates:
-            return []
-
-        # Filter: remove pure noise (importance < threshold)
-        # Keep at least top_k candidates even if some are below threshold
-        filtered = [c for c in candidates
-                    if c["metadata"].get("importance", 0.0) >= self.importance_filter]
-
-        # If filtering removed too many, fall back to unfiltered
-        if len(filtered) < self.top_k:
-            filtered = candidates
-
-        # Keep original relevance order (no re-ranking by importance).
-        # The filter already removed noise; the remaining candidates
-        # preserve their natural semantic similarity order.
-        result = filtered[:self.top_k]
-
-        return result
+        return self.store.search(q_emb, k=self.top_k)
 
     def format_context(self, memories: list[dict]) -> str:
         """Format retrieved items — summaries first (temporal anchors),

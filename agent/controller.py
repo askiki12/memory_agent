@@ -1,26 +1,13 @@
-"""Hybrid Memory Agent v3 — single-index with evidence-first formatting.
+"""Hybrid Memory Agent v4 — multi-dimensional memory scoring.
 
-Architecture (v3, evolved from v2):
-  Single FAISS index stores both session summaries and raw dialogue turns.
-  Retrieval is pure semantic search (same as v2). The key improvements are:
-
-  1. Evidence-first formatting: raw dialogue turns shown FIRST, summaries
-     as supporting context SECOND. This ensures the model reads exact
-     dialogue wording before the compressed summary view.
-  2. top_k=10 (vs 8 in v2): more raw turns in context.
-  3. Ghost-vector compensation: fetch extra candidates to offset soft-deletes.
-  4. Cleaner prompt: simple, no restrictive "don't infer" language.
-
-Why the single-index approach works (learned from v3 experiments):
-  Summaries and raw turns competing for the same top-k slots is a FEATURE,
-  not a bug. It acts as a natural relevance filter — only the most
-  semantically similar items make it into context. Separating stores
-  (parallel retrieval) forces summaries into every context, adding noise.
+v4 adds importance and recency scoring on top of v3's proven single-index
+architecture. Memories carry metadata that feeds into retrieval ranking.
 """
 
 import json
 import os
 import re
+from datetime import date, datetime
 from pathlib import Path
 
 os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
@@ -186,12 +173,108 @@ class MyMemoryAgent:
     # ------------------------------------------------------------------
     # Ingest
     # ------------------------------------------------------------------
+    # Recency scoring (time-decay based on date distance)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _parse_date(date_str: str) -> date | None:
+        """Parse various date formats into a date object.
+
+        Handles: '1:56 pm on 8 May, 2023', '8 May, 2023',
+                 '10 July 2023', 'May 2023', '2023', etc.
+        Returns None for unparseable strings.
+        """
+        if not date_str or date_str == "unknown":
+            return None
+
+        text = str(date_str).strip()
+
+        # Try ISO-ish: '2023-07-10'
+        try:
+            return datetime.strptime(text[:10], "%Y-%m-%d").date()
+        except (ValueError, IndexError):
+            pass
+
+        # Try '1:56 pm on 8 May, 2023' or '8 May, 2023'
+        m = re.search(
+            r'(\d{1,2})\s+(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|'
+            r'May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|'
+            r'Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?),?\s+(\d{4})',
+            text, re.IGNORECASE
+        )
+        if m:
+            day = int(m.group(1))
+            month_str = m.group(2)[:3].lower()
+            month_map = {
+                "jan":1,"feb":2,"mar":3,"apr":4,"may":5,"jun":6,
+                "jul":7,"aug":8,"sep":9,"oct":10,"nov":11,"dec":12
+            }
+            month = month_map.get(month_str, 1)
+            year = int(m.group(3))
+            try:
+                return date(year, month, day)
+            except ValueError:
+                pass
+
+        # Try 'May 2023' or 'June 2023' (no day)
+        m = re.search(
+            r'(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|'
+            r'Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|'
+            r'Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(\d{4})',
+            text, re.IGNORECASE
+        )
+        if m:
+            month_str = m.group(1)[:3].lower()
+            month_map = {
+                "jan":1,"feb":2,"mar":3,"apr":4,"may":5,"jun":6,
+                "jul":7,"aug":8,"sep":9,"oct":10,"nov":11,"dec":12
+            }
+            month = month_map.get(month_str, 1)
+            year = int(m.group(2))
+            return date(year, month, 15)  # mid-month default
+
+        # Try bare year: '2022' or '2023'
+        m = re.search(r'\b(20\d{2})\b', text)
+        if m:
+            return date(int(m.group(1)), 6, 15)  # mid-year default
+
+        return None
+
+    @staticmethod
+    def _compute_recency(
+        memory_date_str: str, latest_date: date | None, decay_lambda: float = 0.005
+    ) -> float:
+        """Compute recency score using exponential decay.
+
+        recency = e^(-λ * days_diff)
+        λ = 0.005 → half-life ~140 days.
+        Returns 1.0 for today, ~0.5 for 140 days ago, ~0.25 for 280 days ago.
+        """
+        if latest_date is None:
+            return 0.5  # neutral if no date reference
+
+        mem_date = MyMemoryAgent._parse_date(memory_date_str)
+        if mem_date is None:
+            return 0.5  # neutral if unparseable
+
+        days_diff = max(0.0, (latest_date - mem_date).days)
+        import math
+        return math.exp(-decay_lambda * days_diff)
+
+    # ------------------------------------------------------------------
 
     def ingest(self, conversation: dict) -> None:
         """Store raw turns + generate and index session summaries."""
         self._speaker_a = conversation.get("speaker_a", "A")
         self._speaker_b = conversation.get("speaker_b", "B")
         sessions = conversation.get("sessions", [])
+
+        # --- Compute latest date as reference for recency ---
+        latest_date: date | None = None
+        for sess in sessions:
+            d = self._parse_date(sess.get("date_time", ""))
+            if d and (latest_date is None or d > latest_date):
+                latest_date = d
 
         # --- Raw dialogue turns ---
         raw_items = []
@@ -203,12 +286,14 @@ class MyMemoryAgent:
             for ti, turn in enumerate(turns_in_sess):
                 text = f"[{date_time}] {turn['speaker']}: {turn['text']}"
                 importance = self._compute_importance(text, ti, total)
+                recency = self._compute_recency(date_time, latest_date)
                 raw_items.append({
                     "text": text,
                     "category": "raw_turn",
                     "session_id": session_id,
                     "date_time": date_time,
                     "importance": importance,
+                    "recency": recency,
                 })
 
         if raw_items:
@@ -235,7 +320,10 @@ class MyMemoryAgent:
 
             if to_add:
                 for m in to_add:
-                    m["importance"] = 0.5  # summaries: moderate — they already score high on relevance
+                    m["importance"] = 0.5
+                    m["recency"] = self._compute_recency(
+                        m.get("date_time", ""), latest_date
+                    )
                 summary_texts = [m["text"] for m in to_add]
                 summary_embeds = self.embed_model.encode(
                     summary_texts, normalize_embeddings=True, show_progress_bar=False
