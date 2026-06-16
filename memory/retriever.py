@@ -35,35 +35,47 @@ class MemoryRetriever:
         self.importance_filter = importance_filter
         self.fetch_multiplier = fetch_multiplier
 
-    def retrieve(self, query: str) -> list[dict]:
-        """Relevance retrieval with optional importance noise filter.
+    @staticmethod
+    def _is_reasoning(query: str) -> bool:
+        """Detect questions needing multi-hop reasoning (V5 Phase 3)."""
+        q = query.strip().lower()
+        first = q.split()[0] if q else ""
+        return first in ("would", "could", "should", "why", "how",
+                         "does", "did", "do", "is", "are", "was",
+                         "were", "has", "have", "can", "will",
+                         "what", "which")
 
-        If importance_filter > 0: removes low-importance candidates
-        (small talk, fillers) before taking top_k. Relevance order
-        is preserved — no re-ranking.
+    def retrieve(self, query: str) -> list[dict]:
+        """Relevance retrieval with query-type-aware k (V5).
+
+        V5 Phase 3: reasoning questions get k+4 (more cross-session evidence).
+        Temporal questions keep k (unchanged).
         """
         if len(self.store) == 0:
             return []
+
+        # V5: adaptive k for reasoning questions
+        k = self.top_k + 4 if self._is_reasoning(query) else self.top_k
 
         q_emb = self.embed_model.encode(
             [query], normalize_embeddings=True, show_progress_bar=False
         )
 
         if self.importance_filter <= 0:
-            return self.store.search(q_emb, k=self.top_k)
+            return self.store.search(q_emb, k=k)
 
         # Fetch extra to compensate for filtered-out items
-        fetch_k = min(self.top_k * self.fetch_multiplier, self.store.total_count)
+        fetch_k = min(k * self.fetch_multiplier, self.store.total_count)
         candidates = self.store.search(q_emb, k=fetch_k)
 
         # Filter out noise, keep relevance order
         filtered = [c for c in candidates
                     if c["metadata"].get("importance", 0.0) >= self.importance_filter]
 
-        if len(filtered) < self.top_k:
+        if len(filtered) < k:
             filtered = candidates
 
-        return filtered[:self.top_k]
+        return filtered[:k]
 
     def format_context(self, memories: list[dict], question: str = "") -> str:
         """Format retrieved items — summaries first, turns grouped by session.
