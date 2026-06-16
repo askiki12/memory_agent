@@ -20,6 +20,7 @@ Why the single-index approach works (learned from v3 experiments):
 
 import json
 import os
+import re
 from pathlib import Path
 
 os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
@@ -68,6 +69,7 @@ class MyMemoryAgent:
         top_k: int = 10,
         similarity_threshold: float = 0.92,
         max_memories: int = 3000,
+        importance_weight: float = 0.08,
         log_dir: str | None = None,
     ):
         self.llm = LLMClient()
@@ -91,7 +93,11 @@ class MyMemoryAgent:
         self.updater = MemoryUpdater(
             self.embed_model, similarity_threshold, max_memories
         )
-        self.retriever = MemoryRetriever(self.embed_model, self.store, top_k=top_k)
+        self.importance_weight = importance_weight
+        self.retriever = MemoryRetriever(
+            self.embed_model, self.store, top_k=top_k,
+            importance_weight=importance_weight,
+        )
 
         # Logging
         self._log_dir = log_dir
@@ -104,6 +110,78 @@ class MyMemoryAgent:
         }
         self._speaker_a = "A"
         self._speaker_b = "B"
+
+    # ------------------------------------------------------------------
+    # Importance scoring (heuristic, zero LLM cost)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _compute_importance(
+        text: str, turn_index: int = 0, total_turns: int = 1
+    ) -> float:
+        """Heuristic importance score in [0, 1]. Zero extra LLM calls.
+
+        Five equally-weighted signals:
+          1. Entity presence (proper nouns)
+          2. Date mentions
+          3. Number mentions
+          4. Turn length (normalized)
+          5. Turn position (first/last 20% of session → higher)
+        """
+        score = 0.0
+        words = text.split()
+
+        # 1. Entity presence: proper nouns (exclude common stopwords)
+        stop_lower = {
+            "i", "you", "he", "she", "it", "we", "they", "me", "him", "her",
+            "us", "them", "my", "your", "his", "its", "our", "their",
+            "a", "an", "the", "is", "are", "was", "were", "be", "been",
+            "have", "has", "had", "do", "does", "did", "will", "would",
+            "can", "could", "should", "may", "might", "shall", "to", "of",
+            "in", "for", "on", "with", "at", "by", "from", "as", "into",
+            "about", "like", "just", "so", "that", "this", "and", "but",
+            "or", "not", "no", "yes", "if", "then", "than", "too", "very",
+            "also", "up", "out", "when", "where", "who", "what", "how",
+            "all", "there", "here", "go", "got", "get", "hi", "hey",
+            "oh", "well", "yeah", "ok", "okay", "um", "uh", "really",
+            "still", "back", "see", "know", "think", "one", "time",
+            "good", "great", "nice", "love", "much", "way", "lot",
+        }
+        has_entity = any(
+            len(w) > 1 and w[0].isupper() and w.lower() not in stop_lower
+            for w in words
+        )
+        if has_entity:
+            score += 0.2
+
+        # 2. Date mentions
+        date_patterns = [
+            r'\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\b',
+            r'\b(20\d{2})\b',
+            r'\b(\d{1,2}(?:st|nd|rd|th)?\s+(?:of\s+)?(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*)\b',
+        ]
+        has_date = any(re.search(p, text, re.IGNORECASE) for p in date_patterns)
+        if has_date:
+            score += 0.2
+
+        # 3. Number mentions (excluding years which are caught above)
+        has_number = bool(re.search(r'\b\d+\b', text))
+        if has_number:
+            score += 0.2
+
+        # 4. Turn length (normalized, cap at 200 chars)
+        length_norm = min(len(text) / 200.0, 1.0)
+        score += 0.2 * length_norm
+
+        # 5. Position in session (first/last 20% → potentially important)
+        if total_turns > 1:
+            pos_ratio = turn_index / (total_turns - 1)
+            if pos_ratio < 0.2 or pos_ratio > 0.8:
+                score += 0.2
+        else:
+            score += 0.2
+
+        return min(score, 1.0)
 
     # ------------------------------------------------------------------
     # Ingest
@@ -120,12 +198,17 @@ class MyMemoryAgent:
         for sess in sessions:
             date_time = sess.get("date_time", "unknown")
             session_id = sess.get("session_id", -1)
-            for turn in sess.get("turns", []):
+            turns_in_sess = sess.get("turns", [])
+            total = len(turns_in_sess)
+            for ti, turn in enumerate(turns_in_sess):
+                text = f"[{date_time}] {turn['speaker']}: {turn['text']}"
+                importance = self._compute_importance(text, ti, total)
                 raw_items.append({
-                    "text": f"[{date_time}] {turn['speaker']}: {turn['text']}",
+                    "text": text,
                     "category": "raw_turn",
                     "session_id": session_id,
                     "date_time": date_time,
+                    "importance": importance,
                 })
 
         if raw_items:
@@ -151,6 +234,8 @@ class MyMemoryAgent:
                 self.store.delete(mem_id)
 
             if to_add:
+                for m in to_add:
+                    m["importance"] = 0.5  # summaries: moderate — they already score high on relevance
                 summary_texts = [m["text"] for m in to_add]
                 summary_embeds = self.embed_model.encode(
                     summary_texts, normalize_embeddings=True, show_progress_bar=False
